@@ -33,8 +33,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(p0: GoogleMap) {
         map = p0
-        crearPosicion()
+      //  crearPosicion()
         pedirLocalizacion()
+        datosLocalizacion()
+    }
+
+    private fun datosLocalizacion() {
+        val latitud = map.myLocation.latitude
+        val longitud = map.myLocation.longitude
     }
 
     private fun crearPosicion() {
@@ -43,9 +49,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         map.addMarker(posicion)
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordenada, 18f), 4000,null)
     }
-
+    //comprobar permisos
     private fun isPermisos() = ContextCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-
+    //solicitar localización y pregunto si los permisos están aceptados
     private fun pedirLocalizacion(){
         if(!::map.isInitialized) return
         if(isPermisos()){
@@ -54,7 +60,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             pedirPermiso()
         }
     }
-
+    //solicitar permisos de localización
     private fun pedirPermiso() {
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
             Toast.makeText(this, "Acepta los permisos en Ajustes", Toast.LENGTH_SHORT).show()
@@ -62,7 +68,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), CODIGO_LOCAL)
         }
     }
-
+    //se comprueba si el permiso está aceptado
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -85,4 +91,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             Toast.makeText(this, "Acepta los permisos en Ajustes", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 }
