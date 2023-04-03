@@ -12,10 +12,18 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map:GoogleMap
+    private var latitud: Double = 0.0
+    private var longitud: Double = 0.0
+    private var refCatas: String = ""
+
+
     companion object{
         const val CODIGO_LOCAL = 0
     }
@@ -36,13 +44,25 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
       //  crearPosicion()
         pedirLocalizacion()
         datosLocalizacion()
+        dibujarPoligono()
+    }
+
+    private fun dibujarPoligono() {
+        getPuntos()
     }
 
     private fun datosLocalizacion() {
-        val latitud = map.myLocation.latitude
-        val longitud = map.myLocation.longitude
+        latitud = map.myLocation.latitude
+        longitud = map.myLocation.longitude
     }
 
+    fun getRefCatastral(): Retrofit{
+        return Retrofit.Builder().baseUrl("http://www.cartociudad.es/geocoder/api/geocoder/reverseGeocode?lon="+ longitud +"&lat="+ latitud + "&type=refcatastral").addConverterFactory(GsonConverterFactory.create()).build()
+    }
+    fun getPuntos(): Retrofit {
+        refCatas = getRefCatastral().toString()
+        return Retrofit.Builder().baseUrl("http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat="+ refCatas +"&amp;srsname=EPSG::25830").addConverterFactory(SimpleXmlConverterFactory.create()).build()
+    }
     private fun crearPosicion() {
         val coordenada = LatLng(38.110134,-3.637166)
         val posicion : MarkerOptions = MarkerOptions().position(coordenada).title("mi posición")
