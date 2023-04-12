@@ -1,6 +1,10 @@
 package com.example.ahorasiahorano
 
+import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -12,6 +16,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
@@ -19,8 +26,9 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map:GoogleMap
-    private var latitud: Double = 0.0
-    private var longitud: Double = 0.0
+    var latitud: Double = 0.0
+    var longitud: Double = 0.0
+    lateinit var localizacion:  LocationManager
     private var refCatas: String = ""
 
 
@@ -41,26 +49,56 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(p0: GoogleMap) {
         map = p0
-      //  crearPosicion()
+        crearPosicion()
         pedirLocalizacion()
         datosLocalizacion()
-        dibujarPoligono()
+        //dibujarPoligono()
     }
 
     private fun dibujarPoligono() {
-        getPuntos()
+        val call = getPuntos().create(ApiServiceRefCatas::class.java).getPuntos()
+        val puntos = call.body()
+        if (call.isSuccessful){
+            print(puntos)
+        }
     }
 
     private fun datosLocalizacion() {
-        latitud = map.myLocation.latitude
-        longitud = map.myLocation.longitude
+           // latitud = map.myLocation.latitude
+           // longitud = map.myLocation.longitude
+
+        localizacion = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var loc: Location = if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+            localizacion.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        latitud = loc.latitude
+        longitud = loc.longitude
     }
 
     fun getRefCatastral(): Retrofit{
         return Retrofit.Builder().baseUrl("http://www.cartociudad.es/geocoder/api/geocoder/reverseGeocode?lon="+ longitud +"&lat="+ latitud + "&type=refcatastral").addConverterFactory(GsonConverterFactory.create()).build()
+        refCatas = getRefCatastral().create(ApiServiceCoord::class.java).getRefCatastral().toString()
+      print(refCatas)
+        getPuntos()
     }
     fun getPuntos(): Retrofit {
-        refCatas = getRefCatastral().toString()
+        //refCatas = getRefCatastral().toString()
+        //refCatas = getRefCatastral().create(ApiServiceCoord::class.java).getRefCatastral().toString()
         return Retrofit.Builder().baseUrl("http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat="+ refCatas +"&amp;srsname=EPSG::25830").addConverterFactory(SimpleXmlConverterFactory.create()).build()
     }
     private fun crearPosicion() {

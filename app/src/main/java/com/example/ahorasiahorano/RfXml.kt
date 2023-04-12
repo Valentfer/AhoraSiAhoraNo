@@ -1,5 +1,5 @@
 package com.example.ahorasiahorano
-
+/*
 data class RfXml(
     val gmlpos: String?,
     val srsName: String?,
@@ -14,13 +14,13 @@ data class CpendLifespanVersion(
     val xsinil: String?,
     val nilReason: String?
 )
-
+*/
 data class GmlposList(
     val srsDimension: String?,
     val count: String?,
     val content: String?
 )
-
+/*
 data class GmlLinearRing(
     val gmlposList: GmlposList?
 )
@@ -105,3 +105,5 @@ data class FeatureCollection(
 data class Base(
     val FeatureCollection: FeatureCollection?
 )
+
+ */
