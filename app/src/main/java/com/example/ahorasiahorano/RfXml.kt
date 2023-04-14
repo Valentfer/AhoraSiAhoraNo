@@ -1,5 +1,9 @@
 package com.example.ahorasiahorano
-/*
+
+import org.simpleframework.xml.Element
+import org.simpleframework.xml.ElementList
+import org.simpleframework.xml.Root
+
 data class RfXml(
     val gmlpos: String?,
     val srsName: String?,
@@ -14,13 +18,19 @@ data class CpendLifespanVersion(
     val xsinil: String?,
     val nilReason: String?
 )
-*/
-data class GmlposList(
+@Root(name = "GmlposList", strict = false)
+data class GmlposList @JvmOverloads constructor(
+    @field:Element(name = "content")
+    @param:Element(name = "content")
     val srsDimension: String?,
+    @field:Element(name = "content")
+    @param:Element(name = "content")
     val count: String?,
-    val content: String?
+    @field:Element(name = "content")
+    @param:Element(name = "content")
+    var content: String?
 )
-/*
+
 data class GmlLinearRing(
     val gmlposList: GmlposList?
 )
@@ -95,7 +105,7 @@ data class FeatureCollection(
     val numberReturned: String?,
     val xmlnsxlink: String?,
     val xsischemaLocation: String?,
-    val member: Member?,
+    val member: FeatureCollection?,
     val xmlnscp: String?,
     val xmlnsxsi: String?,
     val xmlnsgmd: String?,
@@ -106,4 +116,3 @@ data class Base(
     val FeatureCollection: FeatureCollection?
 )
 
- */
