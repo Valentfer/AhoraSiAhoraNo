@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
@@ -121,7 +122,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun rellenarDatos(response: CoordToRc?) {
-     refCatas = response?.refCatastral.toString()
+     //refCatas= response?.address.toString()
         getPuntos()
     }
 
@@ -131,10 +132,12 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     fun getRetrofitPuntos(): Retrofit{
         val urlBase = "http://ovc.catastro.meh.es/INSPIRE/"
-        return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(SimpleXmlConverterFactory.create()).build()
+        //return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(SimpleXmlConverterFactory.create()).build()
+        return Retrofit.Builder().baseUrl(urlBase).client(OkHttpClient()).addConverterFactory(SimpleXmlConverterFactory.create()).build()
     }
     fun getPuntos(){
-        val url = "wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=${refCatas}&amp;srsname=EPSG::25830"
+       // val url = "wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=${refCatas}&amp;srsname=EPSG::25830"
+        val url = "wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=3870005VH4137S&amp;srsname=EPSG::25830"
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val call= getRetrofitPuntos().create(ApiServiceRefCatas::class.java)
@@ -143,8 +146,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (call.isSuccessful) {
                     runOnUiThread {
                         obtenerPuntos(response)
-                        println(response?.gmlposList)
-                        Log.i("Puntos", response?.gmlposList.toString())
+                        println(response?.content)
+                        Log.i("Puntos", response?.content.toString())
                     }
                 }else{
                     runOnUiThread {
@@ -161,8 +164,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
       //  return Retrofit.Builder().baseUrl(url).addConverterFactory(SimpleXmlConverterFactory.create()).build()
     }
 
-    private fun obtenerPuntos(response: Puntos?) {
-      //  response?.content
+    private fun obtenerPuntos(response: GmlposList?) {
+        response?.content
     }
 
     private fun crearPosicion() {
