@@ -7,6 +7,6 @@ import retrofit2.http.Url
 interface ApiServiceRefCatas {
     @GET
    // fun getPuntos(): Response<List<RfXml>>
-    //suspend fun getPuntos(@Url url: String): Response<GmlposList>
+    //suspend fun getPuntos(@Url url: String): Response<GmlLinearRing>
     suspend fun getPuntos(@Url url: String): Response<GmlposList>
 }

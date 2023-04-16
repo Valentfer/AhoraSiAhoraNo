@@ -20,14 +20,18 @@ data class CpendLifespanVersion constructor(
     val nilReason: String?
 )
 @Root(name = "gmlposList", strict = false)
-data class GmlposList constructor(
+data class GmlposList(
 
+    //@field:Attribute(name = "srsDimension", required = false)
     val srsDimension: String?,
+    //@field:Attribute(name = "count", required = false)
     val count: String?,
-    //@field:Element(name = "content")
-    @field:Element(data=false, name="content", required=true)
-    var content: String?
-)
+   // @field:Element(name = "content", required = false)
+    var content: String
+){
+    constructor():this("","", "")
+
+}
 @Root(name = "gmlLinearRing", strict = false)
 data class GmlLinearRing constructor(
     @field:Element(name = "gmlposList")
