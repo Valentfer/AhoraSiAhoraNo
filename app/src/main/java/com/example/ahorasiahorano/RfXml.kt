@@ -3,7 +3,6 @@ package com.example.ahorasiahorano
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
-import org.simpleframework.xml.Text
 
 
 @Root(name = "gmlPoint", strict = false)
@@ -25,103 +24,76 @@ data class CpendLifespanVersion constructor(
 data class GmlposList @JvmOverloads constructor(
 
     //@get:Attribute(name = "srsDimension", required = false)
-    @field:Element(name = "srsDimension")
-    @param:Element(name = "srsDimension")
-    @field:Attribute(name = "srsDimension")
-    @param:Attribute(name = "srsDimension")
+   // @field:Element(name = "srsDimension")
+   // @param:Element(name = "srsDimension")
+    @field:Attribute(name = "srsDimension", required = false)
+    //@param:Attribute(name = "srsDimension")
     var srsDimension: String="",
     //@get:Attribute(name = "count", required = false)
-    @field:Element(name = "count")
-    @param:Element(name = "count")
-    @field:Attribute(name = "count")
-    @param:Attribute(name = "count")
+    //@field:Element(name = "count")
+    //@param:Element(name = "count")
+    @field:Attribute(name = "count", required = false)
+    //@param:Attribute(name = "count")
     var count: String="",
     //@get:Element(name = "content", required = false)
     @field:Element(name = "content")
-    @param:Element(name = "content")
-    @field:Attribute(name = "content")
-    @param:Attribute(name = "content")
-    @Text
+    //@param:Element(name = "content")
+    //@field:Attribute(name = "content")
+    //@param:Attribute(name = "content")
     var content: String=""
     /*
-    * //@get:Attribute(name = "srsDimension", required = false)
-    @field:Element(name = "srsDimension")
-    @param:Element(name = "srsDimension")
-    var srsDimension: String?,
-    //@get:Attribute(name = "count", required = false)
-    @field:Element(name = "count")
-    @param:Element(name = "count")
-    var count: String?,
-    //@get:Element(name = "content", required = false)
-    @field:Element(name = "content")
-    @param:Element(name = "content")
     @field:Path("FeatureCollection/member/cpCadastralParcel/cpgeometry/gmlMultiSurface/" +
             "gmlSurfaceMember/gmlSurface/gmlpatches/gmlPolygonPatch/gmlexterior/gmlLinearRing/gmlLinearRing")
     @param:Path("FeatureCollection/member/cpCadastralParcel/cpgeometry/gmlMultiSurface/" +
             "gmlSurfaceMember/gmlSurface/gmlpatches/gmlPolygonPatch/gmlexterior/gmlLinearRing/gmlLinearRing")
     var content: String?
     * */
-)/*{constructor(content: String): this("", "", content){
-    this.content = content
-}
-
-}*/
+)
+// {constructor(content: String): this("", "", content){
+//    this.content = content
+//}
+//
+//}
 @Root(strict = false, name = "gml:LinearRing")
-//data class GmlLinearRing @JvmOverloads constructor(
 data class GmlLinearRing (
-    //@get:Element(name = "gml:posList", required = true)
-    //@get:Attribute(name = "gmlposList")
-    //var gmlposList: GmlposList?
     @field:Element(name = "gml:posList")
-    //@param:Element(name = "gml:posList")
-   // @field:Attribute(name = "gml:posList")
-   // @param:Attribute(name = "gml:posList")
-    //var gmlposList: GmlposList?
-    //var gmlposList: String? = null
-    var gmlposList: String
+    var gmlposList: GmlposList?
 )
 
-@Root(name = "gmlexterior", strict = false)
-data class Gmlexterior constructor(
-    @field:Element(name = "gmlLinearRing")
+@Root(name = "gml:exterior", strict = false)
+data class Gmlexterior (
     val gmlLinearRing: GmlLinearRing?
 )
-@Root(name = "gmlPolygonPatch", strict = false)
-data class GmlPolygonPatch constructor(
-    @field:Element(name = "gmlexterior")
+@Root(name = "gml:PolygonPatch", strict = false)
+data class GmlPolygonPatch (
     val gmlexterior: Gmlexterior?
 )
-@Root(name = "gmlpatches", strict = false)
-data class Gmlpatches constructor(
-   @field:Element(name = "gmlPolygonPatch")
+@Root(name = "gml:patches", strict = false)
+data class Gmlpatches (
     val gmlPolygonPatch: GmlPolygonPatch?
 )
-@Root(name = "gmlSurface", strict = false)
-data class GmlSurface constructor(
+@Root(name = "gml:Surface", strict = false)
+data class GmlSurface (
     val srsName: String?,
     val gmlid: String?,
-    @field:Element(name = "gmlpatches")
     val gmlpatches: Gmlpatches?
 )
-@Root(name = "gmlSurfaceMember", strict = false)
-data class GmlsurfaceMember constructor(
-    @field:Element(name = "gmlSurface")
+@Root(name = "gml:SurfaceMember", strict = false)
+data class GmlsurfaceMember (
     val gmlSurface: GmlSurface?
 )
-@Root(name = "gmlMultiSurface", strict = false)
-data class GmlMultiSurface constructor(
+@Root(name = "gml:MultiSurface", strict = false)
+data class GmlMultiSurface (
     val srsName: String?,
-    @field:Element(name = "gmlSurfaceMember")
     val gmlsurfaceMember: GmlsurfaceMember?,
     val gmlid: String?
 )
-@Root(name = "cpgeometry", strict = false)
-data class Cpgeometry constructor(
-    @field:Element(name = "gmlMultiSurface")
+@Root(name = "cp:geometry", strict = false)
+data class Cpgeometry (
     val gmlMultiSurface: GmlMultiSurface?
 )
 @Root(name = "identifier", strict = false)
-data class Identifier constructor(
+data class Identifier (
     val xmlns: String?,
     val namespace: String?,
     val localId: String?
@@ -131,16 +103,15 @@ data class CpinspireId constructor(
     val Identifier: Identifier?
 )
 @Root(name = "cpareaValue", strict = false)
-data class CpareaValue constructor(
+data class CpareaValue(
     val uom: String?,
     val content: String?
 )
-@Root(name = "cpCadastralParcel", strict = false)
+@Root(name = "cp:CadastralParcel", strict = false)
 data class CpCadastralParcel constructor(
     val cpreferencePoint: CpreferencePoint?,
     val cplabel: String?,
     val cpendLifespanVersion: CpendLifespanVersion?,
-    @field:Element(name = "cpgeometry")
     val cpgeometry: Cpgeometry?,
     val cpbeginLifespanVersion: String?,
     val cpinspireId: CpinspireId?,
@@ -149,20 +120,18 @@ data class CpCadastralParcel constructor(
     val cpareaValue: CpareaValue?
 )
 @Root(name = "member", strict = false)
-data class Member constructor(
-    @field:Element(name = "cpCadastralParcel")
+data class Member (
     val cpCadastralParcel: CpCadastralParcel?
 )
 @Root(name = "FeatureCollection", strict = false)
-data class FeatureCollection constructor(
+data class FeatureCollection (
     val timeStamp: String?,
     val xmlnsgml: String?,
     val xmlns: String?,
     val numberReturned: String?,
     val xmlnsxlink: String?,
     val xsischemaLocation: String?,
-    @field:Element(name = "member")
-    val member: FeatureCollection?,
+    val member: Member?,
     val xmlnscp: String?,
     val xmlnsxsi: String?,
     val xmlnsgmd: String?,

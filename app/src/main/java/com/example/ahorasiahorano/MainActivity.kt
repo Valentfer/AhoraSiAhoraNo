@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
@@ -131,8 +132,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     fun getRetrofitPuntos(): Retrofit{
         val urlBase = "http://ovc.catastro.meh.es/INSPIRE/"
-        return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(SimpleXmlConverterFactory.create()).build()
-        //return Retrofit.Builder().baseUrl(urlBase).client(OkHttpClient()).addConverterFactory(SimpleXmlConverterFactory.create()).build()
+        //return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(SimpleXmlConverterFactory.create()).build()
+        return Retrofit.Builder().baseUrl(urlBase).client(OkHttpClient()).addConverterFactory(SimpleXmlConverterFactory.create()).build()
     }
     fun getPuntos(){
        // val url = "wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=${refCatas}&amp;srsname=EPSG::25830"
@@ -140,14 +141,13 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val call= getRetrofitPuntos().create(ApiServiceRefCatas::class.java)
-                    //.getPuntos(url)
-                    .getPuntos(GmlLinearRing(""))
+                    .getPuntos(url)
                 val response = call.body()
                 if (call.isSuccessful) {
                     runOnUiThread {
-                  //      obtenerPuntos(response)
-                        //Log.i("Puntos", response?.content.toString())
-                        Log.i("Puntos", response?.gmlposList.toString())
+                       // obtenerPuntos(response)
+                       // Log.i("Puntos", response?.content.toString())
+                        Log.i("Puntos", response?.member!!.cpCadastralParcel!!.cpgeometry!!.gmlMultiSurface!!.gmlsurfaceMember!!.gmlSurface!!.gmlpatches!!.gmlPolygonPatch!!.gmlexterior!!.gmlLinearRing!!.gmlposList!!.content)
                     }
                 }else{
                     runOnUiThread {
@@ -160,11 +160,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
-        //return Retrofit.Builder().baseUrl("http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat="+ refCatas +"&amp;srsname=EPSG::25830").addConverterFactory(SimpleXmlConverterFactory.create()).build()
-      //  return Retrofit.Builder().baseUrl(url).addConverterFactory(SimpleXmlConverterFactory.create()).build()
     }
 
-    private fun obtenerPuntos(response: GmlLinearRing?) {
+    private fun obtenerPuntos(response: GmlposList?) {
         //response?.content
        //response?.gmlposList
     }
