@@ -18,7 +18,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
@@ -132,8 +131,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     fun getRetrofitPuntos(): Retrofit{
         val urlBase = "http://ovc.catastro.meh.es/INSPIRE/"
-        //return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(SimpleXmlConverterFactory.create()).build()
-        return Retrofit.Builder().baseUrl(urlBase).client(OkHttpClient()).addConverterFactory(SimpleXmlConverterFactory.create()).build()
+        return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(SimpleXmlConverterFactory.create()).build()
+        //return Retrofit.Builder().baseUrl(urlBase).client(OkHttpClient()).addConverterFactory(SimpleXmlConverterFactory.create()).build()
     }
     fun getPuntos(){
        // val url = "wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=${refCatas}&amp;srsname=EPSG::25830"
@@ -141,13 +140,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val call= getRetrofitPuntos().create(ApiServiceRefCatas::class.java)
-                    .getPuntos(url)
+                    //.getPuntos(url)
+                    .getPuntos(GmlLinearRing(""))
                 val response = call.body()
                 if (call.isSuccessful) {
                     runOnUiThread {
-                        obtenerPuntos(response)
-                        println(response?.content)
-                        Log.i("Puntos", response?.content.toString())
+                  //      obtenerPuntos(response)
+                        //Log.i("Puntos", response?.content.toString())
+                        Log.i("Puntos", response?.gmlposList.toString())
                     }
                 }else{
                     runOnUiThread {
@@ -164,8 +164,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
       //  return Retrofit.Builder().baseUrl(url).addConverterFactory(SimpleXmlConverterFactory.create()).build()
     }
 
-    private fun obtenerPuntos(response: GmlposList?) {
-        response?.content
+    private fun obtenerPuntos(response: GmlLinearRing?) {
+        //response?.content
+       //response?.gmlposList
     }
 
     private fun crearPosicion() {
@@ -175,7 +176,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordenada, 18f), 4000,null)
     }
     //comprobar permisos
-    private fun isPermisos() = ContextCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    private fun isPermisos() = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     //solicitar localización y pregunto si los permisos están aceptados
     private fun pedirLocalizacion(){
         if(!::map.isInitialized) return
@@ -207,10 +208,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     //solicitar permisos de localización
     private fun pedirPermiso() {
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
             Toast.makeText(this, "Acepta los permisos en Ajustes", Toast.LENGTH_SHORT).show()
         }else{
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), CODIGO_LOCAL)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), CODIGO_LOCAL)
         }
     }
     //se comprueba si el permiso está aceptado

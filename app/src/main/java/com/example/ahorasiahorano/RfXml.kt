@@ -1,7 +1,9 @@
 package com.example.ahorasiahorano
 
+import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
+import org.simpleframework.xml.Text
 
 
 @Root(name = "gmlPoint", strict = false)
@@ -19,24 +21,66 @@ data class CpendLifespanVersion constructor(
     val xsinil: String?,
     val nilReason: String?
 )
-@Root(name = "gmlposList", strict = false)
-data class GmlposList(
+@Root(name = "gml:posList", strict = false)
+data class GmlposList @JvmOverloads constructor(
 
-    //@field:Attribute(name = "srsDimension", required = false)
-    val srsDimension: String?,
-    //@field:Attribute(name = "count", required = false)
-    val count: String?,
-   // @field:Element(name = "content", required = false)
-    var content: String
-){
-    constructor():this("","", "")
-
+    //@get:Attribute(name = "srsDimension", required = false)
+    @field:Element(name = "srsDimension")
+    @param:Element(name = "srsDimension")
+    @field:Attribute(name = "srsDimension")
+    @param:Attribute(name = "srsDimension")
+    var srsDimension: String="",
+    //@get:Attribute(name = "count", required = false)
+    @field:Element(name = "count")
+    @param:Element(name = "count")
+    @field:Attribute(name = "count")
+    @param:Attribute(name = "count")
+    var count: String="",
+    //@get:Element(name = "content", required = false)
+    @field:Element(name = "content")
+    @param:Element(name = "content")
+    @field:Attribute(name = "content")
+    @param:Attribute(name = "content")
+    @Text
+    var content: String=""
+    /*
+    * //@get:Attribute(name = "srsDimension", required = false)
+    @field:Element(name = "srsDimension")
+    @param:Element(name = "srsDimension")
+    var srsDimension: String?,
+    //@get:Attribute(name = "count", required = false)
+    @field:Element(name = "count")
+    @param:Element(name = "count")
+    var count: String?,
+    //@get:Element(name = "content", required = false)
+    @field:Element(name = "content")
+    @param:Element(name = "content")
+    @field:Path("FeatureCollection/member/cpCadastralParcel/cpgeometry/gmlMultiSurface/" +
+            "gmlSurfaceMember/gmlSurface/gmlpatches/gmlPolygonPatch/gmlexterior/gmlLinearRing/gmlLinearRing")
+    @param:Path("FeatureCollection/member/cpCadastralParcel/cpgeometry/gmlMultiSurface/" +
+            "gmlSurfaceMember/gmlSurface/gmlpatches/gmlPolygonPatch/gmlexterior/gmlLinearRing/gmlLinearRing")
+    var content: String?
+    * */
+)/*{constructor(content: String): this("", "", content){
+    this.content = content
 }
-@Root(name = "gmlLinearRing", strict = false)
-data class GmlLinearRing constructor(
-    @field:Element(name = "gmlposList")
-    val gmlposList: GmlposList?
+
+}*/
+@Root(strict = false, name = "gml:LinearRing")
+//data class GmlLinearRing @JvmOverloads constructor(
+data class GmlLinearRing (
+    //@get:Element(name = "gml:posList", required = true)
+    //@get:Attribute(name = "gmlposList")
+    //var gmlposList: GmlposList?
+    @field:Element(name = "gml:posList")
+    //@param:Element(name = "gml:posList")
+   // @field:Attribute(name = "gml:posList")
+   // @param:Attribute(name = "gml:posList")
+    //var gmlposList: GmlposList?
+    //var gmlposList: String? = null
+    var gmlposList: String
 )
+
 @Root(name = "gmlexterior", strict = false)
 data class Gmlexterior constructor(
     @field:Element(name = "gmlLinearRing")
