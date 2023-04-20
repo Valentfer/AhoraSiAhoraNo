@@ -147,7 +147,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     runOnUiThread {
                        // obtenerPuntos(response)
                        // Log.i("Puntos", response?.content.toString())
-                        Log.i("Puntos", response?.member!!.cpCadastralParcel!!.cpgeometry!!.gmlMultiSurface!!.gmlsurfaceMember!!.gmlSurface!!.gmlpatches!!.gmlPolygonPatch!!.gmlexterior!!.gmlLinearRing!!.gmlposList!!.content)
+                        Log.i("Puntos", response?.gmlposList.toString())
+                       // Log.i("Puntos", response?.member!!.cpCadastralParcel!!.cpgeometry!!.gmlMultiSurface!!.gmlsurfaceMember!!.gmlSurface!!.gmlpatches!!.gmlPolygonPatch!!.gmlexterior!!.gmlLinearRing!!.gmlposList!!.content.toString())
                     }
                 }else{
                     runOnUiThread {
