@@ -2,13 +2,16 @@ package com.example.ahorasiahorano
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.LocationManager
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationAvailability
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -28,8 +31,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var map:GoogleMap
     var latitud: Double = 0.0
     var longitud: Double = 0.0
-    lateinit var localizacion:  LocationManager
-    private var refCatas: String = ""
+    var latActual: Double = 0.0
+    var longActual: Double = 0.0
+    lateinit var localizacion: FusedLocationProviderClient
+    var refCatas: String = ""
+    var refCatasActua: String = ""
 
 
     companion object{
@@ -39,6 +45,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        localizacion = LocationServices.getFusedLocationProviderClient(this)
         createFragment()
     }
 
@@ -49,10 +57,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(p0: GoogleMap) {
         map = p0
-        crearPosicion()
+       // crearPosicion()
         pedirLocalizacion()
-        //datosLocalizacion()
-        getRefCatastral()
+        datosLocalizacion()
         //dibujarPoligono()
     }
 
@@ -66,11 +73,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun datosLocalizacion() {
 
-    //        latitud = map.myLocation.latitude
-      //      longitud = map.myLocation.longitude
-/*
-        localizacion = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var loc: Location = if (ActivityCompat.checkSelfPermission(
+        if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
@@ -86,17 +89,22 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             return
-        } else{
-            return null
         }
-            localizacion.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        latitud = loc.latitude
-        longitud = loc.longitude*/
+        localizacion.lastLocation.addOnSuccessListener {
+            location ->
+            if (location != null){
+                runOnUiThread {
+                    latitud = location.latitude
+                    longitud = location.longitude
+                    Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
+                    getRefCatastral(latitud, longitud)
+                }
+            }
+        }
     }
 
-    fun getRefCatastral(){
-       // val url = "reverseGeocode?lon=${longitud}&lat=${latitud}&type=refcatastral"
-        val url = "reverseGeocode?lon=-3.6407&lat=38.0977&type=refcatastral"
+    fun getRefCatastral(latitud: Double, longitud: Double){
+        val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val call= getRetrofitRef().create(ApiServiceCoord::class.java)
@@ -122,8 +130,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun rellenarDatos(response: CoordToRc?) {
-     //refCatas= response?.address.toString()
-        getPuntos()
+     refCatas= response?.address.toString()
+       // getPuntos()
     }
 
     fun getRetrofitRef(): Retrofit{
@@ -147,8 +155,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     runOnUiThread {
                        // obtenerPuntos(response)
                        // Log.i("Puntos", response?.content.toString())
-                        Log.i("Puntos", response?.gmlposList.toString())
-                       // Log.i("Puntos", response?.member!!.cpCadastralParcel!!.cpgeometry!!.gmlMultiSurface!!.gmlsurfaceMember!!.gmlSurface!!.gmlpatches!!.gmlPolygonPatch!!.gmlexterior!!.gmlLinearRing!!.gmlposList!!.content.toString())
+                       // Log.i("Puntos", response?.gmlposList.toString())
+                        Log.i("Puntos", response?.member!!.cpCadastralParcel!!.cpgeometry!!.gmlMultiSurface!!.gmlsurfaceMember!!.gmlSurface!!.gmlpatches!!.gmlPolygonPatch!!.gmlexterior!!.gmlLinearRing!!.gmlposList!!.content.toString())
                     }
                 }else{
                     runOnUiThread {

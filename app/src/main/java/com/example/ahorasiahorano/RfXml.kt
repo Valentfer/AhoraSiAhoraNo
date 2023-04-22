@@ -2,6 +2,7 @@ package com.example.ahorasiahorano
 
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
+import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
 
 
@@ -20,7 +21,8 @@ data class CpendLifespanVersion constructor(
     val xsinil: String?,
     val nilReason: String?
 )
-//@Root(name = "gml:posList", strict = false)
+@Root(name = "gml:posList", strict = false)
+@Namespace(reference = "http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=4770801VH4147S&amp;srsname=EPSG::25830")
 data class GmlposList (
 
     //@get:Attribute(name = "srsDimension", required = false)
@@ -40,6 +42,7 @@ data class GmlposList (
     //@param:Element(name = "content")
     //@field:Attribute(name = "content")
     //@param:Attribute(name = "content")
+    @field:Namespace(reference = "http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=4770801VH4147S&amp;srsname=EPSG::25830")
     var content: String?
     /*
     @field:Path("FeatureCollection/member/cpCadastralParcel/cpgeometry/gmlMultiSurface/" +
@@ -49,11 +52,6 @@ data class GmlposList (
     var content: String?
     * */
 )
- {constructor(content: String): this("", "", content){
-   // this.content = content
-}
-
-}
 @Root(strict = false, name = "gml:LinearRing")
 data class GmlLinearRing (
     @field:Element(data=false, name="gmlposList", required=true, type = GmlposList::class)
@@ -131,6 +129,7 @@ data class FeatureCollection (
     val xmlns: String?,
     val numberReturned: String?,
     val xmlnsxlink: String?,
+    @field:Attribute(name = "xsi:schemaLocation")
     val xsischemaLocation: String?,
     val member: Member?,
     val xmlnscp: String?,
