@@ -23,6 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_main)
 
         localizacion = LocationServices.getFusedLocationProviderClient(this)
+
 
         //locActualizada.onLocationResult(this)
         /* locActualizada = object :LocationCallback(){
@@ -110,17 +112,17 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             // for ActivityCompat#requestPermissions for more details.
             return
         }
-        localizacion.lastLocation.addOnSuccessListener {
-            location ->
-            if (location != null){
-                runOnUiThread {
-                    latitud = location.latitude
-                    longitud = location.longitude
-                    Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
-                    getRefCatastral(latitud, longitud)
+                localizacion.lastLocation.addOnSuccessListener {
+                        location ->
+                    if (location != null){
+                        runOnUiThread {
+                            latitud = location.latitude
+                            longitud = location.longitude
+                            Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
+                            getRefCatastral(latitud, longitud)
+                        }
+                    }
                 }
-            }
-        }
     }
 
     fun getRefCatastral(latitud: Double, longitud: Double){
@@ -134,6 +136,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     runOnUiThread {
                         refCatas = response?.address.toString()
                         println(response?.address)
+                        getPuntos()
                         Log.i("RESPUESTA", response?.address.toString())
                     }
                 }else{
@@ -170,8 +173,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     runOnUiThread {
                        // obtenerPuntos(response)
                        // Log.i("Puntos", response?.content.toString())
-                       // Log.i("Puntos", response?.gmlposList.toString())
-                        Log.i("Puntos", response?.member!!.cpCadastralParcel!!.cpgeometry!!.gmlMultiSurface!!.gmlsurfaceMember!!.gmlSurface!!.gmlpatches!!.gmlPolygonPatch!!.gmlexterior!!.gmlLinearRing!!.gmlposList!!.content.toString())
+                        Log.i("Puntos", response?.gmlposList.toString())
                     }
                 }else{
                     runOnUiThread {

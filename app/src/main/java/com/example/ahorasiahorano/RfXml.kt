@@ -54,7 +54,7 @@ data class GmlposList (
 )
 @Root(strict = false, name = "gml:LinearRing")
 data class GmlLinearRing (
-    @field:Element(data=false, name="gmlposList", required=true, type = GmlposList::class)
+    @field:Element(data=false, name="gml:posList", required=true, type = GmlposList::class)
     //var gmlposList: GmlposList?
     var gmlposList: GmlposList?
 )
