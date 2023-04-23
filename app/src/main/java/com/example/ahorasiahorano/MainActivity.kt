@@ -3,6 +3,7 @@ package com.example.ahorasiahorano
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationRequest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,12 +12,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationAvailability
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +39,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     var latActual: Double = 0.0
     var longActual: Double = 0.0
     lateinit var localizacion: FusedLocationProviderClient
+    lateinit var locActualizada: LocationCallback
     var refCatas: String = ""
     var refCatasActua: String = ""
 
@@ -47,6 +53,20 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_main)
 
         localizacion = LocationServices.getFusedLocationProviderClient(this)
+
+        //locActualizada.onLocationResult(this)
+        /* locActualizada = object :LocationCallback(){
+            override fun onLocationResult(p0: LocationResult) {
+                p0?: return
+                for (location in p0.locations){
+                    latActual = location.latitude
+                    longActual = location.longitude
+                    Log.i("respuesta2",""+latActual + "," + longActual)
+                    // getRefCatastral(latActual, longActual)
+                }
+            }
+        }*/
+
         createFragment()
     }
 
@@ -112,7 +132,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 val response = call.body()
                 if (call.isSuccessful){
                     runOnUiThread {
-                        rellenarDatos(response)
+                        refCatas = response?.address.toString()
                         println(response?.address)
                         Log.i("RESPUESTA", response?.address.toString())
                     }
@@ -127,11 +147,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
-    }
-
-    private fun rellenarDatos(response: CoordToRc?) {
-     refCatas= response?.address.toString()
-       // getPuntos()
     }
 
     fun getRetrofitRef(): Retrofit{
