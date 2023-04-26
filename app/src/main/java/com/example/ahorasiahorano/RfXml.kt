@@ -11,7 +11,7 @@ data class RfXml constructor(
     val gmlpos: String?,
     val srsName: String?,
     val gmlid: String?
-)
+)/*
 //@Root(name = "cpreferencePoint", strict = false)
 data class CpreferencePoint constructor(
     val rfXml: RfXml?
@@ -59,58 +59,68 @@ data class GmlLinearRing (
     var gmlposList: GmlposList?
 )
 
-//@Root(name = "gml:exterior", strict = false)
+@Root(name = "gml:exterior", strict = false)
 data class Gmlexterior (
+    @field:Element(name = "")
     val gmlLinearRing: GmlLinearRing?
 )
-//@Root(name = "gml:PolygonPatch", strict = false)
+@Root(name = "gml:PolygonPatch", strict = false)
 data class GmlPolygonPatch (
+    @field:Element(name = "")
     val gmlexterior: Gmlexterior?
 )
-//@Root(name = "gml:patches", strict = false)
+@Root(name = "gml:patches", strict = false)
 data class Gmlpatches (
+    @field:Element(name = "")
     val gmlPolygonPatch: GmlPolygonPatch?
 )
-//@Root(name = "gml:Surface", strict = false)
+@Root(name = "gml:Surface", strict = false)
 data class GmlSurface (
+
     val srsName: String?,
     val gmlid: String?,
+    @field:Element(name = "")
     val gmlpatches: Gmlpatches?
 )
-//@Root(name = "gml:SurfaceMember", strict = false)
+@Root(name = "gml:SurfaceMember", strict = false)
 data class GmlsurfaceMember (
+    @field:Element(name = "")
     val gmlSurface: GmlSurface?
 )
-//@Root(name = "gml:MultiSurface", strict = false)
+@Root(name = "gml:MultiSurface", strict = false)
 data class GmlMultiSurface (
     val srsName: String?,
+    @field:Element(name = "")
     val gmlsurfaceMember: GmlsurfaceMember?,
     val gmlid: String?
 )
-//@Root(name = "cp:geometry", strict = false)
+@Root(name = "cp:geometry", strict = false)
 data class Cpgeometry (
+    @field:Element(name = "")
     val gmlMultiSurface: GmlMultiSurface?
 )
-//@Root(name = "identifier", strict = false)
+@Root(name = "identifier", strict = false)
 data class Identifier (
     val xmlns: String?,
     val namespace: String?,
     val localId: String?
 )
-//@Root(name = "cpinspired", strict = false)
+@Root(name = "cp:inspired", strict = false)
 data class CpinspireId constructor(
+    @field:Element(name = "")
     val Identifier: Identifier?
 )
-//@Root(name = "cpareaValue", strict = false)
+@Root(name = "cp:areaValue", strict = false)
 data class CpareaValue(
     val uom: String?,
     val content: String?
 )
-//@Root(name = "cp:CadastralParcel", strict = false)
+@Root(name = "cp:CadastralParcel", strict = false)
 data class CpCadastralParcel constructor(
     val cpreferencePoint: CpreferencePoint?,
     val cplabel: String?,
     val cpendLifespanVersion: CpendLifespanVersion?,
+    @field:Element(name = "")
     val cpgeometry: Cpgeometry?,
     val cpbeginLifespanVersion: String?,
     val cpinspireId: CpinspireId?,
@@ -118,11 +128,12 @@ data class CpCadastralParcel constructor(
     val gmlid: String?,
     val cpareaValue: CpareaValue?
 )
-//@Root(name = "member", strict = false)
+@Root(name = "member", strict = false)
 data class Member (
+    @field:Element(name = "")
     val cpCadastralParcel: CpCadastralParcel?
 )
-//@Root(name = "FeatureCollection", strict = false)
+@Root(name = "FeatureCollection", strict = false)
 data class FeatureCollection (
     val timeStamp: String?,
     val xmlnsgml: String?,
@@ -137,8 +148,4 @@ data class FeatureCollection (
     val xmlnsgmd: String?,
     val numberMatched: String?
 )
-//@Root(name = "base", strict = false)
-data class Base constructor(
-    val FeatureCollection: FeatureCollection?
-)
-
+*/
