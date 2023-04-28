@@ -111,7 +111,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     latitud = location.latitude
                     longitud = location.longitude
                     Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
-                    getRefCatastral(latitud, longitud)
+                    //getRefCatastral(latitud, longitud)
+                    //refCatas = ObtenerRefCat(latitud, longitud).getRefCatastral(latitud,longitud).toString()
+                    refCatas = ObtenerRefCat(latitud, longitud).ref
+                    Log.i("refcatas",refCatas)
                 }
             }
         }
@@ -124,13 +127,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     latActual = location.latitude
                     longActual = location.longitude
                     Log.i("respuesta2", "" + latActual + "," + longActual)
-                     getRefCatastral2(latActual, longActual)
+                     //getRefCatastral2(latActual, longActual)
+                    //refCatasActua = ObtenerRefCat(latActual , longActual).getRefCatastral(latActual,longActual).toString()
+                    Log.i("refcataActual", refCatasActua)
                 }
             }
         }, null)
 
     }
-
+/*
     fun getRefCatastral(latitud: Double, longitud: Double){
         val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
         CoroutineScope(Dispatchers.IO).launch {
@@ -260,7 +265,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         //response?.content
        //response?.gmlposList
     }
-*/
+*/*/
     private fun crearPosicion() {
         val coordenada = LatLng(38.110134,-3.637166)
         val posicion : MarkerOptions = MarkerOptions().position(coordenada).title("mi posición")
