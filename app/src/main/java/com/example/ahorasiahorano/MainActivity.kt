@@ -118,6 +118,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 runOnUiThread {
                     latitud = location.latitude
                     longitud = location.longitude
+                    crearPosicion()
                     Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
                     getRefCatastral(latitud, longitud)
                     //refCatas = ObtenerRefCat(latitud, longitud).getRefCatastral(latitud,longitud)
@@ -285,9 +286,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 */*/
     private fun crearPosicion() {
-        val coordenada = LatLng(38.110134,-3.637166)
-        val posicion : MarkerOptions = MarkerOptions().position(coordenada).title("mi posición")
-        map.addMarker(posicion)
+        val coordenada = LatLng(latitud,longitud)
+        //val posicion : MarkerOptions = MarkerOptions().position(coordenada).title("mi posición")
+        //map.addMarker(posicion)
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordenada, 18f), 4000,null)
     }
     //comprobar permisos
