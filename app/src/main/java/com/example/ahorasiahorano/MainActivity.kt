@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -43,7 +44,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var locationRequest: LocationRequest
     var refCatas: String = ""
     var refCatasActua: String = ""
-
+    var pausa: Boolean = false
+    lateinit var btnPausa: Button
 
     companion object{
         const val CODIGO_LOCAL = 0
@@ -52,8 +54,12 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+         btnPausa = findViewById(R.id.btnPausa)
         createFragment()
 
+        btnPausa.setOnClickListener {
+            pausa = true
+        }
     }
 
     private fun createFragment() {
@@ -142,11 +148,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun comprobar() {
         if (refCatas.equals(refCatasActua) ){
             Log.i("comprobar","estas en el mismo lao")
+            pausa = false
         }else{
             Log.e("comprobar","Has cambiado")
             val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.megaman_x_error)
-            mediaPlayer.start()
             //val parpadea: Animation = AnimationUtils.loadAnimation()
+            if(!pausa){
+                mediaPlayer.start()
+            }
         }
     }
 
