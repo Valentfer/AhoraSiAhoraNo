@@ -8,9 +8,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ObtenerRefCat(var longitud: Double, var latitud: Double) {
-    lateinit var ref: String
 
-    fun getRefCatastral(latitud: Double, longitud: Double){
+     lateinit var ref:String
+    fun getRefCatastral(): String {
         val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -19,7 +19,7 @@ class ObtenerRefCat(var longitud: Double, var latitud: Double) {
                 val response = call.body()
                 if (call.isSuccessful){
                     //runOnUiThread {
-                        ref = response?.address.toString()
+                       ref = response?.address.toString()
                         Log.i("RESPUESTA2", response?.address.toString())
                     //}
                 }else{
@@ -33,9 +33,8 @@ class ObtenerRefCat(var longitud: Double, var latitud: Double) {
                // }
             }
         }
+        return ref
     }
-
-
     fun getRetrofitRef(): Retrofit {
         val urlBase = "http://www.cartociudad.es/geocoder/api/geocoder/"
         return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(GsonConverterFactory.create()).build()

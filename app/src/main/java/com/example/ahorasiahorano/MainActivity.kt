@@ -2,9 +2,12 @@ package com.example.ahorasiahorano
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -103,7 +106,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             return
         }
 
-//esto deberia estar en oncreate??
         localizacion.lastLocation.addOnSuccessListener {
                 location ->
             if (location != null){
@@ -111,9 +113,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     latitud = location.latitude
                     longitud = location.longitude
                     Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
-                    //getRefCatastral(latitud, longitud)
-                    //refCatas = ObtenerRefCat(latitud, longitud).getRefCatastral(latitud,longitud).toString()
-                    refCatas = ObtenerRefCat(latitud, longitud).ref
+                    getRefCatastral(latitud, longitud)
+                    //refCatas = ObtenerRefCat(latitud, longitud).getRefCatastral(latitud,longitud)
+                    //refCatas = ObtenerRefCat(longitud, latitud).getRefCatastral()
                     Log.i("refcatas",refCatas)
                 }
             }
@@ -127,15 +129,27 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     latActual = location.latitude
                     longActual = location.longitude
                     Log.i("respuesta2", "" + latActual + "," + longActual)
-                     //getRefCatastral2(latActual, longActual)
-                    //refCatasActua = ObtenerRefCat(latActual , longActual).getRefCatastral(latActual,longActual).toString()
+                     getRefCatastral2(latActual, longActual)
+                    //refCatasActua = ObtenerRefCat(latActual , longActual).getRefCatastral(latActual,longActual)
+                   // refCatasActua = ObtenerRefCat(longActual, latActual).getRefCatastral()
                     Log.i("refcataActual", refCatasActua)
+                   // comprobar()
                 }
             }
         }, null)
 
     }
-/*
+    private fun comprobar() {
+        if (refCatas.equals(refCatasActua) ){
+            Log.i("comprobar","estas en el mismo lao")
+        }else{
+            Log.e("comprobar","Has cambiado")
+            val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.megaman_x_error)
+            mediaPlayer.start()
+            //val parpadea: Animation = AnimationUtils.loadAnimation()
+        }
+    }
+
     fun getRefCatastral(latitud: Double, longitud: Double){
         val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
         CoroutineScope(Dispatchers.IO).launch {
@@ -148,7 +162,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                         refCatas = response?.address.toString()
                         println(response?.address)
                         Log.i("RESPUESTA", response?.address.toString())
-                        getPuntos()
+                        //getPuntos()
                         //main()
                     }
                 }else{
@@ -190,12 +204,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun comprobar() {
-        if (refCatas.equals(refCatasActua) ){
-            Log.i("comprobar","estas en el mismo lao")
-        }
-    }
-
     fun getRetrofitRef(): Retrofit{
         val urlBase = "http://www.cartociudad.es/geocoder/api/geocoder/"
         return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(GsonConverterFactory.create()).build()
@@ -231,6 +239,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+    /*
     fun main() {
         val url = URL("https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&version=2&request=GetFeature&STOREDQUERIE_ID=GetParcel&refcat=4770801VH4147S&srsname=EPSG::25830")
         val connection = url.openConnection() as HttpURLConnection
