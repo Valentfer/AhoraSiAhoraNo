@@ -21,6 +21,11 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.net.URL
+import javax.xml.parsers.DocumentBuilderFactory
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -37,6 +42,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var btnPausa: Button
     lateinit var btnReinicio: Button
     var continua: Boolean = false
+    lateinit var puntos: String
 
     companion object{
         const val CODIGO_LOCAL = 0
@@ -165,6 +171,28 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+
+
+    fun main() {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val url = URL("http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=4770801VH4147S&amp;srsname=EPSG::25830")
+                val connection = url.openConnection()
+                connection.setRequestProperty("Accept", "application/gml+xml")
+                val inputStream = connection.getInputStream()
+                val document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream)
+                val posListElement = document.getElementsByTagName("gml:posList").item(0)
+                val posList = posListElement.textContent.trim().split(" ")
+                println(posList)
+                puntos = posList.toString()
+                Log.i("puntos", posList.toString())
+            } catch (e: Exception) {
+                println("Ha ocurrido un error: \${e.message}")
+                Log.i("puntos", e.message.toString())
+            }
+        }
+    }
+
 
 /*
     fun getRefCatastral(latitud: Double, longitud: Double){
@@ -323,6 +351,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         if(isPermisos()){
 
             datosLocalizacion()
+            main()
 
             if (ActivityCompat.checkSelfPermission(
                     this,
