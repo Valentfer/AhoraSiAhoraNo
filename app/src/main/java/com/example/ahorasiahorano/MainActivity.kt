@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -27,6 +28,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
+import org.jdom2.Namespace
+import org.jdom2.input.SAXBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
@@ -120,14 +123,17 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     longitud = location.longitude
                     crearPosicion()
                     Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
-                    getRefCatastral(latitud, longitud)
-                    //refCatas = ObtenerRefCat(latitud, longitud).getRefCatastral(latitud,longitud)
-                    //refCatas = ObtenerRefCat(longitud, latitud).getRefCatastral()
-                    Log.i("refcatas",refCatas)
+                    //getRefCatastral(latitud, longitud)
+                    val obtenerRefCat = ObtenerRefCat(longitud, latitud)
+                    obtenerRefCat.getRefCatastral { ref ->
+                        runOnUiThread {
+                            refCatas = ref
+                        }
+                    }
+                    Log.i("refcatas", refCatas)
                 }
             }
         }
-
 
         localizacion.requestLocationUpdates(locationRequest, object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult) {
@@ -136,21 +142,26 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     latActual = location.latitude
                     longActual = location.longitude
                     Log.i("respuesta2", "" + latActual + "," + longActual)
-                     getRefCatastral2(latActual, longActual)
-                    //refCatasActua = ObtenerRefCat(latActual , longActual).getRefCatastral(latActual,longActual)
-                   // refCatasActua = ObtenerRefCat(longActual, latActual).getRefCatastral()
+                    // getRefCatastral2(latActual, longActual)
+                    val obtenerRefCat = ObtenerRefCat(longActual, latActual)
+                    obtenerRefCat.getRefCatastral { ref ->
+                        runOnUiThread {
+                            refCatasActua = ref
+                        }
+                    }
                     Log.i("refcataActual", refCatasActua)
-                   // comprobar()
+                    comprobar()
                 }
             }
         }, null)
-
     }
     private fun comprobar() {
         if (refCatas.equals(refCatasActua) ){
             Log.i("comprobar","estas en el mismo lao")
             pausa = false
+            btnPausa.isVisible = false
         }else{
+            btnPausa.isVisible = true
             Log.e("comprobar","Has cambiado")
             val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.megaman_x_error)
             //val parpadea: Animation = AnimationUtils.loadAnimation()
@@ -159,7 +170,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-
+/*
     fun getRefCatastral(latitud: Double, longitud: Double){
         val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
         CoroutineScope(Dispatchers.IO).launch {
@@ -213,7 +224,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-
+*//*
     fun getRetrofitRef(): Retrofit{
         val urlBase = "http://www.cartociudad.es/geocoder/api/geocoder/"
         return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(GsonConverterFactory.create()).build()
@@ -247,7 +258,24 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     Log.i("error2", e.message.toString())
                 }
             }
-        }
+        }/*
+        val url = "https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&version=2&request=GetFeature&STOREDQUERIE_ID=GetParcel&refcat=4770801VH4147S&srsname=EPSG::25830"
+
+// Crear una instancia de SAXBuilder para procesar el documento GML
+        val builder = SAXBuilder()
+        val document = builder.build(url)
+
+// Obtener el valor del elemento poslist
+        val poslist = document.rootElement.getChild("featureMember")
+            .getChild("CP:CadastralParcel", Namespace.getNamespace("CP", "http://www.catastro.meh.es/"))
+            .getChild("boundedBy", Namespace.getNamespace("gml", "http://www.opengis.net/gml/3.2"))
+            .getChild("Envelope", Namespace.getNamespace("gml", "http://www.opengis.net/gml/3.2"))
+            .getChild("lowerCorner", Namespace.getNamespace("gml", "http://www.opengis.net/gml/3.2"))
+        val valorPoslist = poslist.text
+
+        Log.i("puntos", valorPoslist)*/
+
+
     }
     /*
     fun main() {
@@ -284,7 +312,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         //response?.content
        //response?.gmlposList
     }
-*/*/
+*/*/*/
     private fun crearPosicion() {
         val coordenada = LatLng(latitud,longitud)
         //val posicion : MarkerOptions = MarkerOptions().position(coordenada).title("mi posición")
