@@ -30,6 +30,7 @@ class posList {
     @Text
     var text: String = ""
 }
+
 @Root(name = "LinearRing")
 class LinearRing {
     @field:Element(name = "posList")

@@ -6,8 +6,6 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -23,18 +21,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import org.jdom2.Namespace
-import org.jdom2.input.SAXBuilder
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory
-import java.net.HttpURLConnection
-import java.net.URL
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -49,6 +35,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     var refCatasActua: String = ""
     var pausa: Boolean = false
     lateinit var btnPausa: Button
+    lateinit var btnReinicio: Button
+    var continua: Boolean = false
 
     companion object{
         const val CODIGO_LOCAL = 0
@@ -58,10 +46,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
          btnPausa = findViewById(R.id.btnPausa)
+         btnReinicio = findViewById(R.id.btnReinicio)
         createFragment()
 
         btnPausa.setOnClickListener {
             pausa = true
+        }
+        btnReinicio.setOnClickListener {
+            datosLocalizacion()
         }
     }
 
@@ -72,18 +64,21 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(p0: GoogleMap) {
         map = p0
-       // crearPosicion()
         pedirLocalizacion()
-       // datosLocalizacion()
         //dibujarPoligono()
     }
 
     private fun dibujarPoligono() {
-     //   val call = getPuntos().create(ApiServiceRefCatas::class.java).getPuntos()
-       // val puntos = call.body()
-       // if (call.isSuccessful){
-        //    print(puntos)
-        //}
+      /*  val polygonOptions = PolygonOptions()
+        polygonOptions.add(LatLng(lat1, lng1))
+        polygonOptions.add(LatLng(lat2, lng2))
+        polygonOptions.add(LatLng(lat3, lng3))
+        polygonOptions.add(LatLng(lat4, lng4))
+        polygonOptions.strokeWidth(5f)
+        polygonOptions.strokeColor(Color.RED)
+        polygonOptions.fillColor(Color.BLUE)
+        val polygon = googleMap.addPolygon(polygonOptions)
+*/
     }
 
     private fun datosLocalizacion() {
@@ -115,45 +110,45 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             return
         }
 
-        localizacion.lastLocation.addOnSuccessListener {
-                location ->
-            if (location != null){
-                runOnUiThread {
-                    latitud = location.latitude
-                    longitud = location.longitude
-                    crearPosicion()
-                    Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
-                    //getRefCatastral(latitud, longitud)
+    localizacion.lastLocation.addOnSuccessListener { location ->
+        if (location != null) {
+            runOnUiThread {
+                latitud = location.latitude
+                longitud = location.longitude
+                crearPosicion()
+                Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
+                //getRefCatastral(latitud, longitud)
                     val obtenerRefCat = ObtenerRefCat(longitud, latitud)
                     obtenerRefCat.getRefCatastral { ref ->
                         runOnUiThread {
                             refCatas = ref
+                            continua = true
                         }
                     }
                     Log.i("refcatas", refCatas)
                 }
+        }
+    }
+
+    localizacion.requestLocationUpdates(locationRequest, object : LocationCallback() {
+        override fun onLocationResult(p0: LocationResult) {
+            p0 ?: return
+            for (location in p0.locations) {
+                latActual = location.latitude
+                longActual = location.longitude
+                Log.i("respuesta2", "" + latActual + "," + longActual)
+                 //getRefCatastral2(latActual, longActual)
+                val obtenerRefCat = ObtenerRefCat(longActual, latActual)
+                obtenerRefCat.getRefCatastral { ref ->
+                    runOnUiThread {
+                        refCatasActua = ref
+                    }
+                }
+                Log.i("refcataActual", refCatasActua)
+                comprobar()
             }
         }
-
-        localizacion.requestLocationUpdates(locationRequest, object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult) {
-                p0 ?: return
-                for (location in p0.locations) {
-                    latActual = location.latitude
-                    longActual = location.longitude
-                    Log.i("respuesta2", "" + latActual + "," + longActual)
-                    // getRefCatastral2(latActual, longActual)
-                    val obtenerRefCat = ObtenerRefCat(longActual, latActual)
-                    obtenerRefCat.getRefCatastral { ref ->
-                        runOnUiThread {
-                            refCatasActua = ref
-                        }
-                    }
-                    Log.i("refcataActual", refCatasActua)
-                    comprobar()
-                }
-            }
-        }, null)
+    }, null)
     }
     private fun comprobar() {
         if (refCatas.equals(refCatasActua) ){
@@ -170,6 +165,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+
 /*
     fun getRefCatastral(latitud: Double, longitud: Double){
         val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
@@ -224,7 +220,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-*//*
+
     fun getRetrofitRef(): Retrofit{
         val urlBase = "http://www.cartociudad.es/geocoder/api/geocoder/"
         return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(GsonConverterFactory.create()).build()

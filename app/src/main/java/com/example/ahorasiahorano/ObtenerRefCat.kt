@@ -17,8 +17,8 @@ class ObtenerRefCat(var longitud: Double, var latitud: Double) {
                     .getRefCatastral(url)
                 val response = call.body()
                 if (call.isSuccessful){
-                     val  ref = response?.address.toString()
-                        Log.i("RESPUESTA2", response?.address.toString())
+                    val ref = response?.address.toString()
+                    Log.i("RESPUESTA2", response?.address.toString())
                     callback(ref)
                 }else{
                         Log.i("error", "ERROR EN LA RESPUESTA")
