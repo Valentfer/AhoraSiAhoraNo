@@ -2,6 +2,7 @@ package com.example.ahorasiahorano
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PolygonOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -41,7 +43,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     var pausa: Boolean = false
     lateinit var btnPausa: Button
     lateinit var btnReinicio: Button
-    var continua: Boolean = false
     lateinit var puntos: String
 
     companion object{
@@ -71,20 +72,24 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         map = p0
         pedirLocalizacion()
-        //dibujarPoligono()
     }
 
-    private fun dibujarPoligono() {
-      /*  val polygonOptions = PolygonOptions()
-        polygonOptions.add(LatLng(lat1, lng1))
-        polygonOptions.add(LatLng(lat2, lng2))
-        polygonOptions.add(LatLng(lat3, lng3))
-        polygonOptions.add(LatLng(lat4, lng4))
-        polygonOptions.strokeWidth(5f)
-        polygonOptions.strokeColor(Color.RED)
-        polygonOptions.fillColor(Color.BLUE)
-        val polygon = googleMap.addPolygon(polygonOptions)
-*/
+    private fun dibujarPoligono(puntos: String) {
+        GlobalScope.launch(Dispatchers.IO) {
+            val coordenadas = puntos.split(", ")
+            Log.i("lista", coordenadas.toString())
+
+            val polygonOptions = PolygonOptions()
+            for (i in 0 until coordenadas.size step 2) {
+                polygonOptions.add(LatLng(lat,long))
+                Log.i("polipunto", i.toString() + " , " + (i + 1).toDouble())
+            }
+
+            polygonOptions.strokeWidth(5f)
+            polygonOptions.strokeColor(Color.RED)
+            polygonOptions.fillColor(Color.BLUE)
+            map.addPolygon(polygonOptions)
+        }
     }
 
     private fun datosLocalizacion() {
@@ -128,7 +133,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     obtenerRefCat.getRefCatastral { ref ->
                         runOnUiThread {
                             refCatas = ref
-                            continua = true
+                            getPuntos(refCatas)
                         }
                     }
                     Log.i("refcatas", refCatas)
@@ -172,11 +177,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-
-    fun main() {
+    fun getPuntos(ref: String) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val url = URL("http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=4770801VH4147S&amp;srsname=EPSG::25830")
+                //val url = URL("http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=4770801VH4147S&amp;srsname=EPSG::25830")
+                val url = URL("http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=$ref&amp;srsname=EPSG::25830")
                 val connection = url.openConnection()
                 connection.setRequestProperty("Accept", "application/gml+xml")
                 val inputStream = connection.getInputStream()
@@ -185,158 +190,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 val posList = posListElement.textContent.trim().split(" ")
                 println(posList)
                 puntos = posList.toString()
+                dibujarPoligono(puntos)
                 Log.i("puntos", posList.toString())
             } catch (e: Exception) {
-                println("Ha ocurrido un error: \${e.message}")
                 Log.i("puntos", e.message.toString())
             }
         }
     }
 
-
-/*
-    fun getRefCatastral(latitud: Double, longitud: Double){
-        val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val call= getRetrofitRef().create(ApiServiceCoord::class.java)
-                    .getRefCatastral(url)
-                val response = call.body()
-                if (call.isSuccessful){
-                    runOnUiThread {
-                        refCatas = response?.address.toString()
-                        println(response?.address)
-                        Log.i("RESPUESTA", response?.address.toString())
-                        //getPuntos()
-                        //main()
-                    }
-                }else{
-                    runOnUiThread {
-                        Log.i("error", "ERROR EN LA RESPUESTA")
-                    }
-                }
-            }catch (e:java.lang.Exception){
-                runOnUiThread {
-                    Log.i("error", e.message.toString())
-                }
-            }
-        }
-    }
-
-    fun getRefCatastral2(latitud: Double, longitud: Double){
-        val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val call= getRetrofitRef().create(ApiServiceCoord::class.java)
-                    .getRefCatastral(url)
-                val response = call.body()
-                if (call.isSuccessful){
-                    runOnUiThread {
-                        refCatasActua = response?.address.toString()
-                        Log.i("RESPUESTA2", response?.address.toString())
-                        comprobar()
-                    }
-                }else{
-                    runOnUiThread {
-                        Log.i("error", "ERROR EN LA RESPUESTA")
-                    }
-                }
-            }catch (e:java.lang.Exception){
-                runOnUiThread {
-                    Log.i("error", e.message.toString())
-                }
-            }
-        }
-    }
-
-    fun getRetrofitRef(): Retrofit{
-        val urlBase = "http://www.cartociudad.es/geocoder/api/geocoder/"
-        return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(GsonConverterFactory.create()).build()
-    }
-    fun getRetrofitPuntos(): Retrofit{
-        val urlBase = "http://ovc.catastro.meh.es/INSPIRE/"
-        //return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(SimpleXmlConverterFactory.create()).build()
-        return Retrofit.Builder().baseUrl(urlBase).client(OkHttpClient()).addConverterFactory(SimpleXmlConverterFactory.create()).build()
-    }
-    fun getPuntos(){
-       // val url = "wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=${refCatas}&amp;srsname=EPSG::25830"
-        val url = "wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=3870005VH4137S&amp;srsname=EPSG::25830"
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val call= getRetrofitPuntos().create(ApiServiceRefCatas::class.java)
-                    .getPuntos(url)
-                val response = call.body()
-                if (call.isSuccessful) {
-                    runOnUiThread {
-                       // obtenerPuntos(response)
-                        Log.i("Puntos", response?.text.toString())
-                       // Log.i("Puntos", response?.member!!.CadastralParcel!!.geometry!!.MultiSurface!!.surfaceMember!!.Surface!!.patches!!.PolygonPatch!!.exterior!!.LinearRing!!.posList!!.toString())
-                    }
-                }else{
-                    runOnUiThread {
-                        Log.i("error", "ERROR EN LA RESPUESTA")
-                    }
-                }
-            }catch (e:java.lang.Exception){
-                runOnUiThread {
-                    Log.i("error2", e.message.toString())
-                }
-            }
-        }/*
-        val url = "https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&version=2&request=GetFeature&STOREDQUERIE_ID=GetParcel&refcat=4770801VH4147S&srsname=EPSG::25830"
-
-// Crear una instancia de SAXBuilder para procesar el documento GML
-        val builder = SAXBuilder()
-        val document = builder.build(url)
-
-// Obtener el valor del elemento poslist
-        val poslist = document.rootElement.getChild("featureMember")
-            .getChild("CP:CadastralParcel", Namespace.getNamespace("CP", "http://www.catastro.meh.es/"))
-            .getChild("boundedBy", Namespace.getNamespace("gml", "http://www.opengis.net/gml/3.2"))
-            .getChild("Envelope", Namespace.getNamespace("gml", "http://www.opengis.net/gml/3.2"))
-            .getChild("lowerCorner", Namespace.getNamespace("gml", "http://www.opengis.net/gml/3.2"))
-        val valorPoslist = poslist.text
-
-        Log.i("puntos", valorPoslist)*/
-
-
-    }
-    /*
-    fun main() {
-        val url = URL("https://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&version=2&request=GetFeature&STOREDQUERIE_ID=GetParcel&refcat=4770801VH4147S&srsname=EPSG::25830")
-        val connection = url.openConnection() as HttpURLConnection
-        connection.requestMethod = "GET"
-
-        val responseCode = connection.responseCode
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            val inputStream = connection.inputStream
-            val response = inputStream.bufferedReader().use { it.readText() }
-            println(response)
-            Log.i("otros",response)
-        } else {
-            println("Error: $responseCode")
-            Log.i("errormain", responseCode.toString())
-        }
-    }
-    /*
-    fun main2() {
-        val xmlFile = File("archivo.xml")
-        val xmlMapper = XmlMapper()
-        val jsonMapper = ObjectMapper()
-
-        val xml = xmlFile.readText()
-        val jsonObject = xmlMapper.readValue(xml, Any::class.java)
-        val json = jsonMapper.writeValueAsString(jsonObject)
-
-        println(json)
-    }
-    */
-/*
-    private fun obtenerPuntos(response: GmlposList?) {
-        //response?.content
-       //response?.gmlposList
-    }
-*/*/*/
     private fun crearPosicion() {
         val coordenada = LatLng(latitud,longitud)
         //val posicion : MarkerOptions = MarkerOptions().position(coordenada).title("mi posición")
@@ -351,7 +212,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         if(isPermisos()){
 
             datosLocalizacion()
-            main()
 
             if (ActivityCompat.checkSelfPermission(
                     this,
