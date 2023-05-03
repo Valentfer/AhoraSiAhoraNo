@@ -74,24 +74,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         pedirLocalizacion()
     }
 
-    private fun dibujarPoligono(puntos: String) {
-        GlobalScope.launch(Dispatchers.IO) {
-            val coordenadas = puntos.split(", ")
-            Log.i("lista", coordenadas.toString())
-
-            val polygonOptions = PolygonOptions()
-            for (i in 0 until coordenadas.size step 2) {
-                polygonOptions.add(LatLng(lat,long))
-                Log.i("polipunto", i.toString() + " , " + (i + 1).toDouble())
-            }
-
-            polygonOptions.strokeWidth(5f)
-            polygonOptions.strokeColor(Color.RED)
-            polygonOptions.fillColor(Color.BLUE)
-            map.addPolygon(polygonOptions)
-        }
-    }
-
     private fun datosLocalizacion() {
 
         localizacion = LocationServices.getFusedLocationProviderClient(this)
@@ -180,7 +162,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     fun getPuntos(ref: String) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                //val url = URL("http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=4770801VH4147S&amp;srsname=EPSG::25830")
                 val url = URL("http://ovc.catastro.meh.es/INSPIRE/wfsCP.aspx?service=wfs&amp;version=2&amp;request=GetFeature&amp;STOREDQUERIE_ID=GetParcel&amp;refcat=$ref&amp;srsname=EPSG::25830")
                 val connection = url.openConnection()
                 connection.setRequestProperty("Accept", "application/gml+xml")
@@ -194,6 +175,32 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 Log.i("puntos", posList.toString())
             } catch (e: Exception) {
                 Log.i("puntos", e.message.toString())
+            }
+        }
+    }
+
+    private fun dibujarPoligono(puntos: String) {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val coordenadas = puntos.replace("[", "").replace("]","").split(", ")
+                Log.i("polipunto",  coordenadas.toString())
+                val pares = coordenadas.chunked(2){
+                    Pair(it[0], it[1])
+                }
+                val polygonOptions = PolygonOptions()
+
+                for (i in pares){
+                    polygonOptions.add(LatLng(i.first.toDouble(), i.second.toDouble()))
+                    Log.i("polipunto",  "long: "+i.first+" lat: "+ i.second)
+                }
+
+                //polygonOptions.addAll(listaCoordenadas)
+                polygonOptions.strokeWidth(5f)
+                polygonOptions.strokeColor(Color.RED)
+                polygonOptions.fillColor(Color.BLUE)
+                map.addPolygon(polygonOptions)
+            }catch (e: java.lang.Exception){
+                Log.i("polipuntos", e.message.toString())
             }
         }
     }
