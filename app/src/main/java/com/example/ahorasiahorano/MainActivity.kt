@@ -191,8 +191,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 for (i in pares){
 
-                   val latGeo = (30 - 1) * 6 - 90 + (0.9996 * i.first.toDouble()) / 10000000
-                    val longGeo =  i.second.toDouble() / (0.9996 * 6366197.724 * kotlin.math.cos(latGeo)) - (30 * 6 - 183)
+                    val utm = UtmToGeog.convertToLatLng(i.first.toDouble(), i.second.toDouble(), 25830, false)
+                //   val latGeo = (30 - 1) * 6 - 90 + (0.9996 * i.first.toDouble()) / 10000000
+                  //  val longGeo =  i.second.toDouble() / (0.9996 * 6366197.724 * kotlin.math.cos(latGeo)) - (30 * 6 - 183)
 
                  /*   val latGeo = (30 - 1) * 6 - 90 + (0.9996 * i.second.toDouble()) / 1.9666667f
                     val longGeo = i.first.toDouble() / (1.9666667f * cos(latGeo)) - (30 * 6 - 183)
@@ -203,9 +204,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 */
 
                   //  polygonOptions.add(LatLng(i.first.toDouble(), i.second.toDouble()))
-                    polygonOptions.add(LatLng(latGeo, longGeo))
+                    polygonOptions.add(LatLng(utm.second, utm.first))
                    // Log.i("polipunto",  "long: "+i.first+" lat: "+ i.second)
-                    Log.i("polipunto",  "long: "+longGeo+" lat: "+ latGeo)
+                    Log.i("polipunto",  "long: "+utm.first+" lat: "+ utm.second)
                 }
 
 
