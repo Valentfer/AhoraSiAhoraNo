@@ -190,15 +190,31 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 val polygonOptions = PolygonOptions()
 
                 for (i in pares){
-                    polygonOptions.add(LatLng(i.first.toDouble(), i.second.toDouble()))
-                    Log.i("polipunto",  "long: "+i.first+" lat: "+ i.second)
+
+                   val latGeo = (30 - 1) * 6 - 90 + (0.9996 * i.first.toDouble()) / 10000000
+                    val longGeo =  i.second.toDouble() / (0.9996 * 6366197.724 * kotlin.math.cos(latGeo)) - (30 * 6 - 183)
+
+                 /*   val latGeo = (30 - 1) * 6 - 90 + (0.9996 * i.second.toDouble()) / 1.9666667f
+                    val longGeo = i.first.toDouble() / (1.9666667f * cos(latGeo)) - (30 * 6 - 183)
+*/
+
+             /*       val latGeo = (30 - 0.5) * 6 - 90 + (i.second.toDouble() / 0.9996)
+                    val longGeo = i.first.toDouble() / (0.9996 * kotlin.math.cos(latGeo)) - ((30 - 1) * 6 - 180)
+*/
+
+                  //  polygonOptions.add(LatLng(i.first.toDouble(), i.second.toDouble()))
+                    polygonOptions.add(LatLng(latGeo, longGeo))
+                   // Log.i("polipunto",  "long: "+i.first+" lat: "+ i.second)
+                    Log.i("polipunto",  "long: "+longGeo+" lat: "+ latGeo)
                 }
 
-                //polygonOptions.addAll(listaCoordenadas)
+
                 polygonOptions.strokeWidth(5f)
                 polygonOptions.strokeColor(Color.RED)
                 polygonOptions.fillColor(Color.BLUE)
-                map.addPolygon(polygonOptions)
+                runOnUiThread{
+                    map.addPolygon(polygonOptions)
+                }
             }catch (e: java.lang.Exception){
                 Log.i("polipuntos", e.message.toString())
             }
