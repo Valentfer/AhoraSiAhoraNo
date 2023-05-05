@@ -1,12 +1,15 @@
 package com.example.ahorasiahorano
 
 import android.Manifest
+import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -152,9 +155,18 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             btnPausa.isVisible = true
             Log.e("comprobar","Has cambiado")
             val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.megaman_x_error)
-            //val parpadea: Animation = AnimationUtils.loadAnimation()
+            val view = window.decorView
+            val parpadea = ValueAnimator.ofArgb(Color.WHITE, Color.RED)
+           // parpadea.repeatCount = ValueAnimator.INFINITE
+            parpadea.repeatMode = ValueAnimator.REVERSE
+            parpadea.duration = 1000
+            parpadea.addUpdateListener { animator ->
+                val color = animator.animatedValue as Int
+                view.setBackgroundColor(color)
+            }
             if(!pausa){
                 mediaPlayer.start()
+                parpadea.start()
             }
         }
     }
@@ -188,7 +200,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     Pair(it[0], it[1])
                 }
                 val polygonOptions = PolygonOptions()
-
+                runOnUiThread {
+                    map.clear()
+                }
                 for (i in pares){
 
                     val utm = UtmToGeog.convertToLatLng(i.first.toDouble(), i.second.toDouble(), 25830, false)
