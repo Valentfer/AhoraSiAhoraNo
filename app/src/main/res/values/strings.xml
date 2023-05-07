@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">AhoraSiAhoraNo</string>
     <string name="pausar">Pausar</string>
-    <string name="reinicio">Reiniciar limites</string>
+    <string name="reinicio">Iniciar limites</string>
 </resources>

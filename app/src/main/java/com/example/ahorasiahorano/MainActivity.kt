@@ -8,8 +8,6 @@ import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -31,7 +29,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
-
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map:GoogleMap
@@ -61,6 +58,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         btnPausa.setOnClickListener {
             pausa = true
+
         }
         btnReinicio.setOnClickListener {
             datosLocalizacion()
@@ -147,23 +145,27 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }, null)
     }
     private fun comprobar() {
+        val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.megaman_x_error)
+        val view = window.decorView
+        val parpadea = ValueAnimator.ofArgb(Color.WHITE, Color.RED)
+       // parpadea.repeatCount = ValueAnimator.INFINITE
+       // parpadea.repeatMode = ValueAnimator.REVERSE
+        //parpadea.duration = 1000
+        parpadea.addUpdateListener { animator ->
+            val color = animator.animatedValue as Int
+            view.setBackgroundColor(color)
+        }
         if (refCatas.equals(refCatasActua) ){
             Log.i("comprobar","estas en el mismo lao")
             pausa = false
             btnPausa.isVisible = false
+            parpadea.end()
+            view.setBackgroundColor(Color.WHITE)
         }else{
             btnPausa.isVisible = true
+            btnReinicio.text= "Reiniciar Límites"
             Log.e("comprobar","Has cambiado")
-            val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.megaman_x_error)
-            val view = window.decorView
-            val parpadea = ValueAnimator.ofArgb(Color.WHITE, Color.RED)
-           // parpadea.repeatCount = ValueAnimator.INFINITE
-            parpadea.repeatMode = ValueAnimator.REVERSE
-            parpadea.duration = 1000
-            parpadea.addUpdateListener { animator ->
-                val color = animator.animatedValue as Int
-                view.setBackgroundColor(color)
-            }
+
             if(!pausa){
                 mediaPlayer.start()
                 parpadea.start()
@@ -249,7 +251,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         if(!::map.isInitialized) return
         if(isPermisos()){
 
-            datosLocalizacion()
+           // datosLocalizacion()
 
             if (ActivityCompat.checkSelfPermission(
                     this,

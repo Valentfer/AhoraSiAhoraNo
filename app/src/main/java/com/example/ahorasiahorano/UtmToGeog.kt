@@ -83,10 +83,11 @@ class UtmToGeog{
                 val phiPrime = asin(sin(xiPrime) / cosh(etaPrime))
                 val deltaLambda = atan(sinh(etaPrime) / cos(xiPrime))
 //FALSEANDO LOS DEC
-                val lon = Math.toDegrees(deltaLambda) + 2.5
-                val lat = Math.toDegrees(phiPrime) - 3.2
+                val lon = Math.toDegrees(deltaLambda) + 2.59162889066213
+                val lat = Math.toDegrees(phiPrime) - 3.225189611791611
 
                 return Pair(lat, lon)
             }
-        }
+      }
 }
+
