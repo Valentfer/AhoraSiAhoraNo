@@ -24,11 +24,16 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolygonOptions
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.net.URL
 import javax.xml.parsers.DocumentBuilderFactory
+import org.osgeo.proj4j.ProjCoordinate
+import org.osgeo.proj4j.proj.TransverseMercatorProjection
+import java.util.Locale
+
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map:GoogleMap
@@ -173,6 +178,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun getPuntos(ref: String) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -193,6 +199,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun dibujarPoligono(puntos: String) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -207,7 +214,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
                 for (i in pares){
 
-                    val utm = UtmToGeog.convertToLatLng(i.first.toDouble(), i.second.toDouble(), 25830, false)
+                  //  val utm = UtmToGeog.convertToLatLng(i.first.toDouble(), i.second.toDouble(), 25830, false)
+                    val utm = utmToLatLon(i.first.toDouble(), i.second.toDouble(), 25830, "N")
                 //   val latGeo = (30 - 1) * 6 - 90 + (0.9996 * i.first.toDouble()) / 10000000
                   //  val longGeo =  i.second.toDouble() / (0.9996 * 6366197.724 * kotlin.math.cos(latGeo)) - (30 * 6 - 183)
 
@@ -220,15 +228,16 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 */
 
                   //  polygonOptions.add(LatLng(i.first.toDouble(), i.second.toDouble()))
-                    polygonOptions.add(LatLng(utm.second, utm.first))
+                  //  polygonOptions.add(LatLng(utm.second, utm.first))
+                    polygonOptions.add(LatLng( (utm.y + 0.1612808859756),(utm.x - 2.999877740587968)))
                    // Log.i("polipunto",  "long: "+i.first+" lat: "+ i.second)
-                    Log.i("polipunto",  "long: "+utm.first+" lat: "+ utm.second)
+                    Log.i("polipunto",  "long: "+(utm.x - 2.999877740587968)+" lat: "+ (utm.y + 0.1612808859756))
                 }
 
 
                 polygonOptions.strokeWidth(5f)
                 polygonOptions.strokeColor(Color.RED)
-                polygonOptions.fillColor(Color.BLUE)
+                polygonOptions.fillColor(Color.LTGRAY)
                 runOnUiThread{
                     map.addPolygon(polygonOptions)
                 }
@@ -237,7 +246,18 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-
+    fun utmToLatLon(easting: Double, northing: Double, zoneNumber: Int, zoneLetter: String): ProjCoordinate {
+        val tm = TransverseMercatorProjection()
+        tm.setLonCDegrees(-183.0 + 6.0 * zoneNumber)
+        tm.falseEasting = 500000.0
+        tm.falseNorthing = if (zoneLetter.uppercase(Locale.ROOT) == "S") 10000000.0 else 0.0
+        tm.scaleFactor = 0.9996
+        tm.initialize()
+        val utmCoord = ProjCoordinate(easting, northing)
+        val latLonCoord = ProjCoordinate()
+        tm.inverseProject(utmCoord, latLonCoord)
+        return latLonCoord
+    }
     private fun crearPosicion() {
         val coordenada = LatLng(latitud,longitud)
         //val posicion : MarkerOptions = MarkerOptions().position(coordenada).title("mi posición")
