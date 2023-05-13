@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2">
+
+    <Button
+        android:id="@+id/btnRefCata"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="372dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/refcata"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRefCata"
+        app:strokeColor="#DD4A3737" />
+
+    <Button
+        android:id="@+id/btnPorCoor"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="372dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="116dp"
+        android:text="@string/Coor"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRefCata"
+        app:strokeColor="#DD4A3737" />
+
+    <EditText
+        android:id="@+id/etRefCata"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="372dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="88dp"
+        android:ems="10"
+        android:hint="@string/Introduzca"
+        app:cornerRadius="20dp"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBienvenida"
+        app:strokeColor="#DD4A3737"/>
+
+    <TextView
+        android:id="@+id/tvBienvenida"
+        android:layout_width="372dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="136dp"
+        android:gravity="center"
+        android:text="@string/Bienvenida"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

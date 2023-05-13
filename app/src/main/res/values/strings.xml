@@ -2,4 +2,8 @@
     <string name="app_name">AhoraSiAhoraNo</string>
     <string name="pausar">Pausar</string>
     <string name="reinicio">Iniciar limites</string>
+    <string name="refcata">Comprobar Ref. catastral</string>
+    <string name="Coor">Comprobar por ubicación</string>
+    <string name="Introduzca">Introduzca la Ref. Catastral</string>
+    <string name="Bienvenida">Bienvenido a tu Buscador de limites</string>
 </resources>

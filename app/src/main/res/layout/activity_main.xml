@@ -21,24 +21,32 @@
 
     <Button
         android:id="@+id/btnPausa"
-        android:layout_width="190dp"
-        android:layout_height="67dp"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="185dp"
+        android:layout_height="80dp"
         android:text="@string/pausar"
+        android:visibility="invisible"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.02"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
+        app:layout_constraintTop_toBottomOf="@+id/map"
+        app:strokeColor="#DD4A3737" />
 
     <Button
         android:id="@+id/btnReinicio"
-        android:layout_width="190dp"
-        android:layout_height="67dp"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="185dp"
+        android:layout_height="80dp"
         android:text="@string/reinicio"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.967"
+        app:layout_constraintHorizontal_bias="0.977"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map" />
+        app:layout_constraintTop_toBottomOf="@+id/map"
+        app:layout_constraintVertical_bias="0.503"
+        app:strokeColor="#DD4A3737" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
