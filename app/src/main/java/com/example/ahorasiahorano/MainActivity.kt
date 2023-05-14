@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var btnPausa: Button
     lateinit var btnReinicio: Button
     lateinit var puntos: String
+    private var eligeRef: Boolean = false
 
     companion object {
         const val CODIGO_LOCAL = 0
@@ -69,12 +70,13 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         btnPausa = findViewById(R.id.btnPausa)
         btnReinicio = findViewById(R.id.btnReinicio)
         createFragment()
-
+        eligeRef = intent.extras!!.getBoolean("boolean")
         btnPausa.setOnClickListener {
             pausa = true
 
         }
         btnReinicio.setOnClickListener {
+            eligeRef = true
             datosLocalizacion()
         }
     }
@@ -172,11 +174,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                     val obtenerRefCat = ObtenerRefCat(longitud, latitud)
                     obtenerRefCat.getRefCatastral { ref ->
                         runOnUiThread {
-                            val eligeRef = intent.extras!!.getBoolean("boolean")
-                            if (eligeRef){
-                                refCatas = ref
+                            //eligeRef = intent.extras!!.getBoolean("boolean")
+                            refCatas = if (eligeRef){
+                                ref
                             }else{
-                                refCatas = intent.extras!!.getString("referencia").toString()
+                                intent.extras!!.getString("referencia").toString()
                             }
                                 getPuntos(refCatas)
                         }
@@ -347,6 +349,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 return
             }
             map.isMyLocationEnabled = true
+            datosLocalizacion()
         } else {
             pedirPermiso()
         }

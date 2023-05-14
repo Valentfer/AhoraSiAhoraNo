@@ -30,6 +30,7 @@ class MainActivity2 : AppCompatActivity() {
     }
 
     private fun parcelaRefCata() {
+        porCoordenadas = false
         if (etRefCat.text.isNotEmpty()){
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("referencia", etRefCat.text.toString())
