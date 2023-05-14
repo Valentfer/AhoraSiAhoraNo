@@ -6,4 +6,12 @@
     <string name="Coor">Comprobar por ubicación</string>
     <string name="Introduzca">Introduzca la Ref. Catastral</string>
     <string name="Bienvenida">Bienvenido a tu Buscador de limites</string>
+    <string name="usuario">Introduzca el Usuario</string>
+    <string name="password">Introduzca la clave</string>
+    <string name="tvusuario">Introduzca el Usuario:</string>
+    <string name="tvpassword">Introduzca la clave:</string>
+    <string name="btnRegistro">Registrarse en AhoraSi,AhoraNo</string>
+    <string name="btnInicio">Inicio</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="btnRegInsertar">Insertar</string>
 </resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity4">
+
+    <EditText
+        android:id="@+id/etRegUsuario"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="236dp"
+        android:ems="10"
+        android:hint="@string/usuario"
+        android:inputType="text"
+        android:radius="20dp"
+        android:textColorHint="#DD4A3737"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etRegPassword"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="text"
+        android:radius="20dp"
+        android:textColorHint="#DD4A3737"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRegUsuario" />
+
+    <Button
+        android:id="@+id/btnRegInsertar"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="372dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="80dp"
+        android:text="@string/btnRegInsertar"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRegPassword"
+        app:strokeColor="#DD4A3737" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
