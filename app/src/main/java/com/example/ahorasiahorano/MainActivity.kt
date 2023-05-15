@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -23,6 +24,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnPolygonClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -30,6 +32,7 @@ import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.gms.maps.model.Polyline
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -92,7 +95,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         pedirLocalizacion()
 
-/*
         map.setOnPolygonClickListener {
 
             val builder = AlertDialog.Builder(this)
@@ -100,14 +102,17 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 .setMessage("Quieres guardar la imagen o los puntos?")
                 .setPositiveButton("Imagen") { dialog, which ->
                     guardarImagen()
+
                     Toast.makeText(this, "Imagen guardada", Toast.LENGTH_SHORT).show()
                 }
                 .setNegativeButton("Coordenadas") { dialog, which ->
-       //             guardarParcela(it)
+                    //             guardarParcela(it)
                     Toast.makeText(this, "Guardadas las coordenadas de la parcela", Toast.LENGTH_SHORT).show()
                 }
-                .show()
-        }*/
+            val alertDialog = builder.create()
+            alertDialog.show()
+        }
+
     }
 
 /*    private fun guardarParcela(polygon: Polygon) {
@@ -289,6 +294,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 polygonOptions.strokeWidth(5f)
                 polygonOptions.strokeColor(Color.RED)
                 polygonOptions.fillColor(Color.LTGRAY)
+                polygonOptions.clickable(true)
                 runOnUiThread {
                     map.addPolygon(polygonOptions)
                 }
@@ -432,21 +438,39 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             Toast.makeText(this, "Acepta los permisos en Ajustes", Toast.LENGTH_SHORT).show()
         }
     }
+/*
+    private fun encodeToBase64(image: Bitmap?): String {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        image?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+    }*/
+
 fun guardarImagen(){
     val snapshotReadyCallback = GoogleMap.SnapshotReadyCallback { bitmap ->
         val stream = ByteArrayOutputStream()
         bitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
         val bytes = stream.toByteArray()
+        val imagestring = Base64.encodeToString(bytes, Base64.DEFAULT)
 
-        val file = File(this.filesDir, "map_imagen.png")
-        val outputStream = FileOutputStream(file)
-        outputStream.write(bytes)
-        outputStream.close()
+        val admin = BBDD(this, "parcelas", null, 1)
+        val BaseDeDatos = admin.writableDatabase
+        val registro = ContentValues()
 
-        Toast.makeText(this, "Guardado en \${file.absolutePath}", Toast.LENGTH_SHORT).show()
+        registro.put("usuario", intent.extras.getString())
+        registro.put("imagen", imagestring.toString())
+        registro.put("coordenadas", )
+
+        BaseDeDatos.insert("parcelas", null, registro)
+
+        BaseDeDatos.close()
+
+
+        Toast.makeText(this, "Imagen guardada", Toast.LENGTH_SHORT).show()
     }
 
     map.snapshot(snapshotReadyCallback)
 }
 
 }
+
