@@ -12,6 +12,7 @@ class MainActivity2 : AppCompatActivity() {
     lateinit var btnRefCat: Button
     lateinit var btnPorCoor: Button
     lateinit var etRefCat: EditText
+    private lateinit var usuario: String
     var porCoordenadas: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +21,7 @@ class MainActivity2 : AppCompatActivity() {
         btnRefCat = findViewById(R.id.btnRefCata)
         btnPorCoor = findViewById(R.id.btnPorCoor)
         etRefCat = findViewById(R.id.etRefCata)
-
+        usuario = intent.extras!!.getString("usuario").toString()
         btnPorCoor.setOnClickListener {
             parcelaUbicacion()
         }
@@ -35,6 +36,7 @@ class MainActivity2 : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("referencia", etRefCat.text.toString())
             intent.putExtra("boolean", porCoordenadas)
+            intent.putExtra("usuario", usuario)
             startActivity(intent)
         }else{
             Toast.makeText(this, "Debes introducir la referencia catastral", Toast.LENGTH_LONG).show()
@@ -46,6 +48,7 @@ class MainActivity2 : AppCompatActivity() {
         porCoordenadas = true
         val intent= Intent(this, MainActivity::class.java)
         intent.putExtra("boolean", porCoordenadas)
+        intent.putExtra("usuario", usuario)
         startActivity(intent)
     }
 }

@@ -24,15 +24,10 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnPolygonClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
-import com.google.android.gms.maps.model.Polyline
-import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -42,8 +37,6 @@ import javax.xml.parsers.DocumentBuilderFactory
 import org.osgeo.proj4j.ProjCoordinate
 import org.osgeo.proj4j.proj.TransverseMercatorProjection
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
 import java.util.Locale
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -99,15 +92,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Parcela")
-                .setMessage("Quieres guardar la imagen o los puntos?")
-                .setPositiveButton("Imagen") { dialog, which ->
-                    guardarImagen()
-
-                    Toast.makeText(this, "Imagen guardada", Toast.LENGTH_SHORT).show()
+                .setMessage("Quieres guardar la parcela?")
+                .setPositiveButton("Si") { _, _ ->
+                    guardarDatos(latitud, longitud)
+                    Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
                 }
-                .setNegativeButton("Coordenadas") { dialog, which ->
+                .setNegativeButton("No") { _, _ ->
                     //             guardarParcela(it)
-                    Toast.makeText(this, "Guardadas las coordenadas de la parcela", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Guardadas las coordenadas de la parcela", Toast.LENGTH_SHORT).show()
                 }
             val alertDialog = builder.create()
             alertDialog.show()
@@ -115,31 +107,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-/*    private fun guardarParcela(polygon: Polygon) {
-        val pointsString = Gson().toJson(polygon.points)
-
-        val values = ContentValues().apply {
-            put("points", pointsString)
-        }
-        writableDatabase.insert("polygons", null, values)
-    }*/
-    /*fun leerParcela(): List<Polyline> {
-        val polygons = mutableListOf<Polyline>()
-        val cursor = readableDatabase.query("polygons", arrayOf("points"), null, null, null, null, null)
-        cursor.use {
-            while (it.moveToNext()) {
-                // Convert the points string to a list of LatLng objects
-                val pointsString = it.getString(0)
-                val pointsType = object : TypeToken<List<LatLng>>() {}.type
-                val points = Gson().fromJson<List<LatLng>>(pointsString, pointsType)
-
-                // Create a new polyline with the points and add it to the list
-                val polyline = map.addPolyline(PolylineOptions().clickable(true).addAll(points))
-                polygons.add(polyline)
-            }
-        }
-        return polygons
-    }*/
     private fun datosLocalizacion() {
 
         localizacion = LocationServices.getFusedLocationProviderClient(this)
@@ -199,7 +166,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 for (location in p0.locations) {
                     latActual = location.latitude
                     longActual = location.longitude
-                    Log.i("respuesta2", "" + latActual + "," + longActual)
+                    Log.i("respuesta2", "$latActual,$longActual")
                     val obtenerRefCat = ObtenerRefCat(longActual, latActual)
                     obtenerRefCat.getRefCatastral { ref ->
                         runOnUiThread {
@@ -446,7 +413,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }*/
 
-fun guardarImagen(){
+fun guardarDatos(latitud: Double, longitud: Double) {
     val snapshotReadyCallback = GoogleMap.SnapshotReadyCallback { bitmap ->
         val stream = ByteArrayOutputStream()
         bitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
@@ -454,19 +421,18 @@ fun guardarImagen(){
         val imagestring = Base64.encodeToString(bytes, Base64.DEFAULT)
 
         val admin = BBDD(this, "parcelas", null, 1)
-        val BaseDeDatos = admin.writableDatabase
+        val baseDatos = admin.writableDatabase
         val registro = ContentValues()
 
-        registro.put("usuario", intent.extras.getString())
+        registro.put("usuario", intent.extras!!.getString("usuario"))
         registro.put("imagen", imagestring.toString())
-        registro.put("coordenadas", )
+        registro.put("imagen", imagestring.toByteArray())
+        registro.put("latitud", latitud)
+        registro.put("longitud", longitud)
 
-        BaseDeDatos.insert("parcelas", null, registro)
+        baseDatos.insert("parcelas", null, registro)
 
-        BaseDeDatos.close()
-
-
-        Toast.makeText(this, "Imagen guardada", Toast.LENGTH_SHORT).show()
+        baseDatos.close()
     }
 
     map.snapshot(snapshotReadyCallback)

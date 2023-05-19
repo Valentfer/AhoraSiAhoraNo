@@ -28,15 +28,15 @@ class MainActivity4 : AppCompatActivity() {
     private fun insertarReg() {
         if (etRegUsuario.text.isNotEmpty() && etRegPassword.text.isNotEmpty()){
             val admin = BBDD(this, "login", null, 1)
-            val BaseDeDatos = admin.writableDatabase
+            val baseDeDatos = admin.writableDatabase
                 val registro = ContentValues()
 
                 registro.put("usuario", etRegUsuario.text.toString())
                 registro.put("password", etRegPassword.text.toString())
 
-                BaseDeDatos.insert("login", null, registro)
+                baseDeDatos.insert("login", null, registro)
 
-                BaseDeDatos.close()
+                baseDeDatos.close()
 
                 etRegUsuario.setText("")
                 etRegPassword.setText("")

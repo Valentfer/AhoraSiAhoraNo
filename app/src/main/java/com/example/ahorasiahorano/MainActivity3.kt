@@ -32,6 +32,7 @@ class MainActivity3 : AppCompatActivity() {
             if (etUsuario.text.isNotEmpty() && etPassword.text.isNotEmpty()){
                 if (iniciarApp(etUsuario.text.toString(), etPassword.text.toString())){
                     val intent = Intent(this, MainActivity2::class.java)
+                    intent.putExtra("usuario", etUsuario.text.toString())
                     startActivity(intent)
                 }else{
                     Toast.makeText(this,"Datos incorrectos",Toast.LENGTH_LONG).show()

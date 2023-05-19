@@ -18,8 +18,16 @@ class ObtenerRefCat(var longitud: Double, var latitud: Double) {
                 val response = call.body()
                 if (call.isSuccessful){
                     val ref = response?.address.toString()
+                    val dir = response?.refCatastral.toString()
+                    val cp = response?.postalCode.toString()
+                    val ccaa = response?.comunidadAutonoma.toString()
+                    val municipio = response?.muni.toString()
                     Log.i("RESPUESTA2", response?.address.toString())
                     callback(ref)
+                    callback(dir)
+                    callback(cp)
+                    callback(ccaa)
+                    callback(municipio)
                 }else{
                         Log.i("error", "ERROR EN LA RESPUESTA")
                 }
