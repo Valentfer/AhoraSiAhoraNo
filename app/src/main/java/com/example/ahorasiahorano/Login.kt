@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 
-class MainActivity3 : AppCompatActivity() {
+class Login : AppCompatActivity() {
 
     private lateinit var etUsuario: EditText
     private lateinit var etPassword: EditText
@@ -17,7 +17,7 @@ class MainActivity3 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main3)
+        setContentView(R.layout.login)
 
         etUsuario = findViewById(R.id.etUsuario)
         etPassword = findViewById(R.id.etPassword)
@@ -25,13 +25,13 @@ class MainActivity3 : AppCompatActivity() {
         btnInicio = findViewById(R.id.btnInicio)
 
         btnRegistro.setOnClickListener {
-            val intent = Intent(this, MainActivity4::class.java)
+            val intent = Intent(this, Registro::class.java)
             startActivity(intent)
         }
         btnInicio.setOnClickListener {
             if (etUsuario.text.isNotEmpty() && etPassword.text.isNotEmpty()){
                 if (iniciarApp(etUsuario.text.toString(), etPassword.text.toString())){
-                    val intent = Intent(this, MainActivity2::class.java)
+                    val intent = Intent(this, Menu::class.java)
                     intent.putExtra("usuario", etUsuario.text.toString())
                     startActivity(intent)
                 }else{

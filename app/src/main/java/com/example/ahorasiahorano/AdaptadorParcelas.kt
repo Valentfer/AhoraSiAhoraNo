@@ -1,5 +1,7 @@
 package com.example.ahorasiahorano
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +13,10 @@ class AdaptadorParcelas(val listaParcelas: List<Parcela>): RecyclerView.Adapter<
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        return ViewHolder(layoutInflater.inflate(R.layout.item_card,parent, false))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card,parent, false)
+    return ViewHolder(view)
+    //val layoutInflater = LayoutInflater.from(parent.context)
+        //return ViewHolder(layoutInflater.inflate(R.layout.item_card,parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -52,7 +56,10 @@ class AdaptadorParcelas(val listaParcelas: List<Parcela>): RecyclerView.Adapter<
             view.findViewById<TextView>(R.id.tvCardCP).text = codPostaCard
             view.findViewById<TextView>(R.id.tvCardRef).text = referenciaCard
             view.findViewById<TextView>(R.id.tvCardCcaa).text = ccaaCard
-            view.findViewById<ImageView>(R.id.image).setImageBitmap(parcela.imagen)
+            val bitmap = parcela.imagen
+            val bitbytearra = Base64.decode(bitmap, Base64.DEFAULT)
+            val imagenbit = BitmapFactory.decodeByteArray(bitbytearra, 0, bitbytearra.size)
+            view.findViewById<ImageView>(R.id.image).setImageBitmap(imagenbit)
         }
     }
 

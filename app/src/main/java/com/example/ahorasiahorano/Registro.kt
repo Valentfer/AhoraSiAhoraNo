@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 
-class MainActivity4 : AppCompatActivity() {
+class Registro : AppCompatActivity() {
 
     lateinit var btnRegInsertar: Button
     lateinit var etRegUsuario: EditText
@@ -15,7 +15,7 @@ class MainActivity4 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main4)
+        setContentView(R.layout.registro)
         btnRegInsertar = findViewById(R.id.btnRegInsertar)
         etRegUsuario = findViewById(R.id.etRegUsuario)
         etRegPassword = findViewById(R.id.etRegPassword)

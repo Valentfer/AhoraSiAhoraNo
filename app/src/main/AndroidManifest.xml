@@ -23,10 +23,10 @@
             android:name=".ItemCard"
             android:exported="false" />
         <activity
-            android:name=".MainActivity4"
+            android:name=".Registro"
             android:exported="false" />
         <activity
-            android:name=".MainActivity3"
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity2"
+            android:name=".Menu"
             android:exported="true" />
 
         <meta-data
@@ -43,7 +43,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Mapa"
             android:exported="true" />
     </application>
 

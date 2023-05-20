@@ -39,7 +39,7 @@ import org.osgeo.proj4j.proj.TransverseMercatorProjection
 import java.io.ByteArrayOutputStream
 import java.util.Locale
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback {
+class Mapa : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
     var latitud: Double = 0.0
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.mapa)
         btnPausa = findViewById(R.id.btnPausa)
         btnReinicio = findViewById(R.id.btnReinicio)
         createFragment()
@@ -162,7 +162,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         localizacion.requestLocationUpdates(locationRequest, object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult) {
-             //   p0 ?: return
                 for (location in p0.locations) {
                     latActual = location.latitude
                     longActual = location.longitude
@@ -425,8 +424,7 @@ fun guardarDatos(latitud: Double, longitud: Double) {
         val registro = ContentValues()
 
         registro.put("usuario", intent.extras!!.getString("usuario"))
-        registro.put("imagen", imagestring.toString())
-        registro.put("imagen", imagestring.toByteArray())
+        registro.put("imagen", imagestring)
         registro.put("latitud", latitud)
         registro.put("longitud", longitud)
 

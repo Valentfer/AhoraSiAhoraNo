@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2">
+    tools:context=".Menu">
 
     <Button
         android:id="@+id/btnRefCata"
@@ -24,12 +24,27 @@
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="372dp"
         android:layout_height="52dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="40dp"
         android:text="@string/Coor"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRefCata"
+        app:strokeColor="#DD4A3737" />
+
+    <Button
+        android:id="@+id/btnMisParcelas"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="372dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/Parcelas"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPorCoor"
         app:strokeColor="#DD4A3737" />
 
     <EditText

@@ -7,19 +7,21 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 
-class MainActivity2 : AppCompatActivity() {
+class Menu : AppCompatActivity() {
 
     lateinit var btnRefCat: Button
     lateinit var btnPorCoor: Button
+    lateinit var btnMisParcelas: Button
     lateinit var etRefCat: EditText
     private lateinit var usuario: String
     var porCoordenadas: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
+        setContentView(R.layout.menu)
         btnRefCat = findViewById(R.id.btnRefCata)
         btnPorCoor = findViewById(R.id.btnPorCoor)
+        btnMisParcelas = findViewById(R.id.btnMisParcelas)
         etRefCat = findViewById(R.id.etRefCata)
         usuario = intent.extras!!.getString("usuario").toString()
         btnPorCoor.setOnClickListener {
@@ -28,12 +30,21 @@ class MainActivity2 : AppCompatActivity() {
         btnRefCat.setOnClickListener {
             parcelaRefCata()
         }
+        btnMisParcelas.setOnClickListener {
+            irAMisParcela()
+        }
+    }
+
+    private fun irAMisParcela() {
+        val intent = Intent(this, Recycler::class.java)
+        intent.putExtra("usuario", usuario)
+        startActivity(intent)
     }
 
     private fun parcelaRefCata() {
         porCoordenadas = false
         if (etRefCat.text.isNotEmpty()){
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, Mapa::class.java)
             intent.putExtra("referencia", etRefCat.text.toString())
             intent.putExtra("boolean", porCoordenadas)
             intent.putExtra("usuario", usuario)
@@ -46,7 +57,7 @@ class MainActivity2 : AppCompatActivity() {
 
     private fun parcelaUbicacion() {
         porCoordenadas = true
-        val intent= Intent(this, MainActivity::class.java)
+        val intent= Intent(this, Mapa::class.java)
         intent.putExtra("boolean", porCoordenadas)
         intent.putExtra("usuario", usuario)
         startActivity(intent)
