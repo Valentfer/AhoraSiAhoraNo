@@ -2,14 +2,13 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Cardview"
-    style="?attr/materialCardViewOutlinedStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="20dp"
     app:cardElevation="5dp"
-    app:strokeColor="#DD4A3737"
-    android:foreground="?android:attr/selectableItemBackground">
+    app:strokeColor="#DD4A3737">
 
     <ImageView
         android:id="@+id/image"

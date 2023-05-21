@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ObtenerRefCat(var longitud: Double, var latitud: Double) {
+class ObtenerRefCat(private var longitud: Double, private var latitud: Double) {
 
     fun getRefCatastral(callback : (String) -> Unit) {
         val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
@@ -18,16 +18,8 @@ class ObtenerRefCat(var longitud: Double, var latitud: Double) {
                 val response = call.body()
                 if (call.isSuccessful){
                     val ref = response?.address.toString()
-                    val dir = response?.refCatastral.toString()
-                    val cp = response?.postalCode.toString()
-                    val ccaa = response?.comunidadAutonoma.toString()
-                    val municipio = response?.muni.toString()
                     Log.i("RESPUESTA2", response?.address.toString())
                     callback(ref)
-                    callback(dir)
-                    callback(cp)
-                    callback(ccaa)
-                    callback(municipio)
                 }else{
                         Log.i("error", "ERROR EN LA RESPUESTA")
                 }
@@ -36,7 +28,7 @@ class ObtenerRefCat(var longitud: Double, var latitud: Double) {
             }
         }
     }
-    fun getRetrofitRef(): Retrofit {
+    private fun getRetrofitRef(): Retrofit {
         val urlBase = "http://www.cartociudad.es/geocoder/api/geocoder/"
         return Retrofit.Builder().baseUrl(urlBase).addConverterFactory(GsonConverterFactory.create()).build()
     }

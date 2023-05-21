@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class AdaptadorParcelas(val listaParcelas: List<Parcela>): RecyclerView.Adapter<AdaptadorParcelas.ViewHolder>(){
+class AdaptadorParcelas(private val listaParcelas: List<Parcela>): RecyclerView.Adapter<AdaptadorParcelas.ViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,36 +26,12 @@ class AdaptadorParcelas(val listaParcelas: List<Parcela>): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.render(listaParcelas[position])
     }
-    class ViewHolder(val view: View):RecyclerView.ViewHolder(view){
-
-        lateinit var codPostaCard: String
-        lateinit var ccaaCard: String
-        lateinit var municipioCard: String
-        lateinit var referenciaCard: String
-        lateinit var dirCard: String
+    class ViewHolder(private val view: View):RecyclerView.ViewHolder(view){
 
         fun render(parcela: Parcela){
-
-            val datos = ObtenerRefCat(parcela.Longitud, parcela.latitud)
-            datos.getRefCatastral {ref ->
-                referenciaCard = ref
-            }
-            datos.getRefCatastral {dir ->
-                dirCard = dir
-            }
-            datos.getRefCatastral {ccaa ->
-                ccaaCard = ccaa
-            }
-            datos.getRefCatastral {municipio ->
-                municipioCard = municipio
-            }
-            datos.getRefCatastral {cp ->
-                codPostaCard = cp
-            }
-
-            view.findViewById<TextView>(R.id.tvCardCP).text = codPostaCard
-            view.findViewById<TextView>(R.id.tvCardRef).text = referenciaCard
-            view.findViewById<TextView>(R.id.tvCardCcaa).text = ccaaCard
+            view.findViewById<TextView>(R.id.tvCardCP).text = parcela.usuario
+            view.findViewById<TextView>(R.id.tvCardRef).text = parcela.latitud.toString()
+            view.findViewById<TextView>(R.id.tvCardCcaa).text = parcela.Longitud.toString()
             val bitmap = parcela.imagen
             val bitbytearra = Base64.decode(bitmap, Base64.DEFAULT)
             val imagenbit = BitmapFactory.decodeByteArray(bitbytearra, 0, bitbytearra.size)

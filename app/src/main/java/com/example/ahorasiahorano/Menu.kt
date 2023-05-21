@@ -9,12 +9,12 @@ import android.widget.Toast
 
 class Menu : AppCompatActivity() {
 
-    lateinit var btnRefCat: Button
-    lateinit var btnPorCoor: Button
-    lateinit var btnMisParcelas: Button
-    lateinit var etRefCat: EditText
+    private lateinit var btnRefCat: Button
+    private lateinit var btnPorCoor: Button
+    private lateinit var btnMisParcelas: Button
+    private lateinit var etRefCat: EditText
     private lateinit var usuario: String
-    var porCoordenadas: Boolean = false
+    private var porCoordenadas: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

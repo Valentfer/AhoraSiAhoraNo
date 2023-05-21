@@ -9,9 +9,9 @@ import android.widget.Toast
 
 class Registro : AppCompatActivity() {
 
-    lateinit var btnRegInsertar: Button
-    lateinit var etRegUsuario: EditText
-    lateinit var etRegPassword: EditText
+    private lateinit var btnRegInsertar: Button
+    private lateinit var etRegUsuario: EditText
+    private lateinit var etRegPassword: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

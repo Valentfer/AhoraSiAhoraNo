@@ -42,18 +42,18 @@ import java.util.Locale
 class Mapa : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
-    var latitud: Double = 0.0
-    var longitud: Double = 0.0
+    private var latitud: Double = 0.0
+    private var longitud: Double = 0.0
     var latActual: Double = 0.0
     var longActual: Double = 0.0
-    lateinit var localizacion: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
-    var refCatas: String = ""
+    private lateinit var localizacion: FusedLocationProviderClient
+    private lateinit var locationRequest: LocationRequest
+    private var refCatas: String = ""
     var refCatasActua: String = ""
-    var pausa: Boolean = false
-    lateinit var btnPausa: Button
-    lateinit var btnReinicio: Button
-    lateinit var puntos: String
+    private var pausa: Boolean = false
+    private lateinit var btnPausa: Button
+    private lateinit var btnReinicio: Button
+    private lateinit var puntos: String
     private var eligeRef: Boolean = false
 
     companion object {
@@ -98,8 +98,6 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                     Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
                 }
                 .setNegativeButton("No") { _, _ ->
-                    //             guardarParcela(it)
-                    //Toast.makeText(this, "Guardadas las coordenadas de la parcela", Toast.LENGTH_SHORT).show()
                 }
             val alertDialog = builder.create()
             alertDialog.show()
@@ -146,7 +144,6 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                     val obtenerRefCat = ObtenerRefCat(longitud, latitud)
                     obtenerRefCat.getRefCatastral { ref ->
                         runOnUiThread {
-                            //eligeRef = intent.extras!!.getBoolean("boolean")
                             refCatas = if (eligeRef){
                                 ref
                             }else{
@@ -183,9 +180,6 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.megaman_x_error)
         val view = window.decorView
         val parpadea = ValueAnimator.ofArgb(Color.WHITE, Color.RED)
-        // parpadea.repeatCount = ValueAnimator.INFINITE
-        // parpadea.repeatMode = ValueAnimator.REVERSE
-        //parpadea.duration = 1000
         parpadea.addUpdateListener { animator ->
             val color = animator.animatedValue as Int
             view.setBackgroundColor(color)
@@ -270,7 +264,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun utmToLatLon(
+    private fun utmToLatLon(
         easting: Double,
         northing: Double,
         zoneNumber: Int,
@@ -404,15 +398,8 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
             Toast.makeText(this, "Acepta los permisos en Ajustes", Toast.LENGTH_SHORT).show()
         }
     }
-/*
-    private fun encodeToBase64(image: Bitmap?): String {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        image?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-        val byteArray = byteArrayOutputStream.toByteArray()
-        return Base64.encodeToString(byteArray, Base64.DEFAULT)
-    }*/
 
-fun guardarDatos(latitud: Double, longitud: Double) {
+private fun guardarDatos(latitud: Double, longitud: Double) {
     val snapshotReadyCallback = GoogleMap.SnapshotReadyCallback { bitmap ->
         val stream = ByteArrayOutputStream()
         bitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)

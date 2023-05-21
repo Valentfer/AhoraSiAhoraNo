@@ -3,26 +3,26 @@ package com.example.ahorasiahorano
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class Recycler : AppCompatActivity() {
 
-    //val parcelas: List<Parcela> = listOf()
-    val parcelas = mutableListOf<Parcela>()
+    private val parcelas = mutableListOf<Parcela>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recycler)
         buscar()
         init()
-
     }
     private fun init(){
-        val adapter = AdaptadorParcelas(parcelas)
         val recycler = findViewById<RecyclerView>(R.id.rcRecycler)
+        recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val adapter = AdaptadorParcelas(parcelas)
         recycler.adapter = adapter
     }
-    fun buscar() {
+    private fun buscar() {
         val admin = BBDD(this, "parcelas", null, 1)
         val baseDeDatos = admin.writableDatabase
 
@@ -45,5 +45,6 @@ class Recycler : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "No existen parcelas", Toast.LENGTH_SHORT).show()
             }
+
     }
 }
