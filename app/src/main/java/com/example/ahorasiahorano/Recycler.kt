@@ -14,7 +14,6 @@ class Recycler : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recycler)
         buscar()
-        init()
     }
     private fun init(){
         val recycler = findViewById<RecyclerView>(R.id.rcRecycler)
@@ -33,18 +32,20 @@ class Recycler : AppCompatActivity() {
                 null
             )
             if (fila.moveToFirst()) {
+                do{
 
-                val user = fila.getString(0)
-                val image = fila.getString(1)
-                val latitud = fila.getString(2)
-                val longitud = fila.getString(3)
+                    val user = fila.getString(0)
+                    val image = fila.getString(1)
+                    val latitud = fila.getString(2)
+                    val longitud = fila.getString(3)
 
-                parcelas.add(Parcela(user, image, latitud.toDouble(), longitud.toDouble()))
+                    parcelas.add(Parcela(user, image, latitud.toDouble(), longitud.toDouble()))
+                }while (fila.moveToNext())
                 fila.close()
                 baseDeDatos.close()
             } else {
                 Toast.makeText(this, "No existen parcelas", Toast.LENGTH_SHORT).show()
             }
-
+        init()
     }
 }
