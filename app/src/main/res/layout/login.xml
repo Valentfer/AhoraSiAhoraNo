@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvUsuario"
-        app:strokeColor="#DD4A3737" />
+        app:strokeColor="#DD7923B8" />
 
     <TextView
         android:id="@+id/tvPassword"
@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPassword"
-        app:strokeColor="#DD4A3737"
+        app:strokeColor="#DD7923B8"
         android:autofillHints="" />
 
     <Button
@@ -85,7 +85,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"
         app:layout_constraintVertical_bias="0.133"
-        app:strokeColor="#DD4A3737" />
+        app:strokeColor="#DD7923B8" />
 
     <Button
         android:id="@+id/btnRegistro"

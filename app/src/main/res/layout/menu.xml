@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etRefCata"
-        app:strokeColor="#DD4A3737" />
+        app:strokeColor="#DD7923B8" />
 
     <Button
         android:id="@+id/btnPorCoor"
@@ -31,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRefCata"
-        app:strokeColor="#DD4A3737" />
+        app:strokeColor="#DD7923B8" />
 
     <Button
         android:id="@+id/btnMisParcelas"
@@ -45,30 +45,33 @@
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPorCoor"
-        app:strokeColor="#DD4A3737" />
+        app:strokeColor="#DD7923B8" />
 
     <EditText
         android:id="@+id/etRefCata"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="372dp"
         android:layout_height="52dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:hint="@string/Introduzca"
-        app:cornerRadius="20dp"
         android:inputType="text"
+        app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBienvenida"
-        app:strokeColor="#DD4A3737"/>
+        app:strokeColor="#DD4A3737" />
 
     <TextView
         android:id="@+id/tvBienvenida"
-        android:layout_width="372dp"
-        android:layout_height="52dp"
+        android:layout_width="388dp"
+        android:layout_height="81dp"
         android:layout_marginTop="136dp"
         android:gravity="center"
         android:text="@string/Bienvenida"
+        android:textColor="@color/black"
+        android:textSize="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

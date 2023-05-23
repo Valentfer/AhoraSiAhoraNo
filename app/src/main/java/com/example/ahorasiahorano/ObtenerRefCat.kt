@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ObtenerRefCat(private var longitud: Double, private var latitud: Double) {
 
-    fun getRefCatastral(callback : (String) -> Unit) {
+    fun getRefCatastral(callback : (String, String, String, String, String) -> Unit) {
         val url = "reverseGeocode?lon=$longitud&lat=$latitud&type=refcatastral"
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -18,8 +18,13 @@ class ObtenerRefCat(private var longitud: Double, private var latitud: Double) {
                 val response = call.body()
                 if (call.isSuccessful){
                     val ref = response?.address.toString()
+                    val dir = response?.refCatastral.toString()
+                    val codPostal = response?.postalCode.toString()
+                    val extension = response?.extension.toString()
+                    val muni = response?.muni.toString()
                     Log.i("RESPUESTA2", response?.address.toString())
-                    callback(ref)
+                    //callback(ref)
+                    callback(ref, dir, codPostal, extension, muni)
                 }else{
                         Log.i("error", "ERROR EN LA RESPUESTA")
                 }

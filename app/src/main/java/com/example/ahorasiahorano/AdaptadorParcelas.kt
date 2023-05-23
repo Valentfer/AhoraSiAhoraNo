@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
-class AdaptadorParcelas(private val listaParcelas: List<Parcela>): RecyclerView.Adapter<AdaptadorParcelas.ViewHolder>(){
+class AdaptadorParcelas(private val listaParcelas: List<DatosParcela>, private val listener: OnItemClickListener): RecyclerView.Adapter<AdaptadorParcelas.ViewHolder>(){
 
-
+    interface OnItemClickListener{
+        fun onItemClick(datosParcela: DatosParcela)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card,parent, false)
     return ViewHolder(view)
@@ -25,14 +28,19 @@ class AdaptadorParcelas(private val listaParcelas: List<Parcela>): RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.render(listaParcelas[position])
-    }
-    class ViewHolder(private val view: View):RecyclerView.ViewHolder(view){
 
-        fun render(parcela: Parcela){
-            view.findViewById<TextView>(R.id.tvCardCP).text = parcela.usuario
-            view.findViewById<TextView>(R.id.tvCardRef).text = parcela.latitud.toString()
-            view.findViewById<TextView>(R.id.tvCardCcaa).text = parcela.Longitud.toString()
-            val bitmap = parcela.imagen
+    }
+    inner class ViewHolder(private val view: View):RecyclerView.ViewHolder(view){
+
+        fun render(datosParcela: DatosParcela){
+
+            view.findViewById<TextView>(R.id.tvCardCP).text = datosParcela.codPostal
+            view.findViewById<TextView>(R.id.tvCardRef).text = datosParcela.refeCat
+            view.findViewById<TextView>(R.id.tvCardCcaa).text = datosParcela.extension
+            view.findViewById<CardView>(R.id.Cardview).setOnClickListener {
+                listener.onItemClick(datosParcela)
+            }
+            val bitmap = datosParcela.parcela.imagen
             val bitbytearra = Base64.decode(bitmap, Base64.DEFAULT)
             val imagenbit = BitmapFactory.decodeByteArray(bitbytearra, 0, bitbytearra.size)
             view.findViewById<ImageView>(R.id.image).setImageBitmap(imagenbit)

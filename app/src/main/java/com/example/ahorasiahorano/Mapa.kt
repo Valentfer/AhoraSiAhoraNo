@@ -142,7 +142,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                     crearPosicion()
                     Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
                     val obtenerRefCat = ObtenerRefCat(longitud, latitud)
-                    obtenerRefCat.getRefCatastral { ref ->
+                    obtenerRefCat.getRefCatastral { ref, _, _, _, _ ->
                         runOnUiThread {
                             refCatas = if (eligeRef){
                                 ref
@@ -164,7 +164,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                     longActual = location.longitude
                     Log.i("respuesta2", "$latActual,$longActual")
                     val obtenerRefCat = ObtenerRefCat(longActual, latActual)
-                    obtenerRefCat.getRefCatastral { ref ->
+                    obtenerRefCat.getRefCatastral { ref,_,_,_,_ ->
                         runOnUiThread {
                             refCatasActua = ref
                         }

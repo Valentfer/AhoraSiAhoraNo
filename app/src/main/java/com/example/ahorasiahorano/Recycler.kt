@@ -1,24 +1,36 @@
 package com.example.ahorasiahorano
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class Recycler : AppCompatActivity() {
+class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
 
-    private val parcelas = mutableListOf<Parcela>()
+    private val parcelas = mutableListOf<DatosParcela>()
+    private lateinit var adapter: AdaptadorParcelas
+    private lateinit var pBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recycler)
+        pBar = findViewById(R.id.pBar)
         buscar()
+        init()
     }
     private fun init(){
         val recycler = findViewById<RecyclerView>(R.id.rcRecycler)
         recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val adapter = AdaptadorParcelas(parcelas)
+        adapter = AdaptadorParcelas(parcelas, this)
         recycler.adapter = adapter
     }
     private fun buscar() {
@@ -39,13 +51,38 @@ class Recycler : AppCompatActivity() {
                     val latitud = fila.getString(2)
                     val longitud = fila.getString(3)
 
-                    parcelas.add(Parcela(user, image, latitud.toDouble(), longitud.toDouble()))
+                    obtenerDAtos(Parcela(user, image, latitud.toDouble(), longitud.toDouble()))
+
                 }while (fila.moveToNext())
                 fila.close()
                 baseDeDatos.close()
             } else {
                 Toast.makeText(this, "No existen parcelas", Toast.LENGTH_SHORT).show()
             }
-        init()
+    }
+
+    private fun obtenerDAtos(parcela: Parcela) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val obtenerRefCat = ObtenerRefCat(parcela.Longitud, parcela.latitud)
+                    obtenerRefCat.getRefCatastral { ref, dir, codPostal, extension, muni ->
+                        runOnUiThread {
+                            if (pBar.isVisible){
+                                pBar.visibility = View.GONE
+                            }
+                            parcelas.add(DatosParcela(parcela, ref, dir, codPostal, extension, muni))
+                            adapter.notifyItemInserted(parcelas.size -1)
+                        }
+                            }
+                }catch (e:Exception){
+                    Log.e("parcelas", e.message.toString())
+                }
+            }
+        }
+
+    override fun onItemClick(datosParcela: DatosParcela) {
+        val intent = Intent(this, DatoAcParcela::class.java)
+        intent.putExtra("referencia", datosParcela)
+        startActivity(intent)
     }
 }
