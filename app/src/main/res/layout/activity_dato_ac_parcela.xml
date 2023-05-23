@@ -7,10 +7,52 @@
     tools:context=".DatoAcParcela">
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="226dp"
-        android:layout_height="167dp"
-        app:srcCompat="@drawable/ic_launcher_background"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="65dp" />
+        android:id="@+id/imvDato"
+        android:layout_width="300dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/tvRefDato"
+        android:layout_width="233dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="56dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imvDato" />
+
+    <TextView
+        android:id="@+id/tvcodPosDato"
+        android:layout_width="233dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="56dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMunicipioDato" />
+
+    <TextView
+        android:id="@+id/tvMunicipioDato"
+        android:layout_width="233dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="56dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRefDato" />
+    <TextView
+        android:id="@+id/tvDirDato"
+        android:layout_width="233dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="56dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvcodPosDato" />
 </androidx.constraintlayout.widget.ConstraintLayout>
