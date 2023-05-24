@@ -43,21 +43,22 @@ class Menu : AppCompatActivity() {
 
     private fun parcelaRefCata() {
         porCoordenadas = false
-        if (etRefCat.text.isNotEmpty()){
+        if (etRefCat.text.isNotEmpty()) {
             val intent = Intent(this, Mapa::class.java)
             intent.putExtra("referencia", etRefCat.text.toString())
             intent.putExtra("boolean", porCoordenadas)
             intent.putExtra("usuario", usuario)
             startActivity(intent)
-        }else{
-            Toast.makeText(this, "Debes introducir la referencia catastral", Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(this, "Debes introducir la referencia catastral", Toast.LENGTH_LONG)
+                .show()
         }
 
     }
 
     private fun parcelaUbicacion() {
         porCoordenadas = true
-        val intent= Intent(this, Mapa::class.java)
+        val intent = Intent(this, Mapa::class.java)
         intent.putExtra("boolean", porCoordenadas)
         intent.putExtra("usuario", usuario)
         startActivity(intent)

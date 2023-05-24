@@ -31,13 +31,13 @@
             android:textColor="@color/black"/>
 
         <TextView
-            android:id="@+id/tvCardCP"
+            android:id="@+id/tvCardDir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/tvCardCcaa"
+            android:id="@+id/tvCardMun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp" />

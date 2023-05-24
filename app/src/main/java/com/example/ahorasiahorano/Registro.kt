@@ -26,24 +26,24 @@ class Registro : AppCompatActivity() {
     }
 
     private fun insertarReg() {
-        if (etRegUsuario.text.isNotEmpty() && etRegPassword.text.isNotEmpty()){
+        if (etRegUsuario.text.isNotEmpty() && etRegPassword.text.isNotEmpty()) {
             val admin = BBDD(this, "login", null, 1)
             val baseDeDatos = admin.writableDatabase
-                val registro = ContentValues()
+            val registro = ContentValues()
 
-                registro.put("usuario", etRegUsuario.text.toString())
-                registro.put("password", etRegPassword.text.toString())
+            registro.put("usuario", etRegUsuario.text.toString())
+            registro.put("password", etRegPassword.text.toString())
 
-                baseDeDatos.insert("login", null, registro)
+            baseDeDatos.insert("login", null, registro)
 
-                baseDeDatos.close()
+            baseDeDatos.close()
 
-                etRegUsuario.setText("")
-                etRegPassword.setText("")
+            etRegUsuario.setText("")
+            etRegPassword.setText("")
 
-                Toast.makeText(this, "Registrado correctamente", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
-            }
+            Toast.makeText(this, "Registrado correctamente", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Debes introducir todos los campos", Toast.LENGTH_SHORT).show()
+        }
     }
 }

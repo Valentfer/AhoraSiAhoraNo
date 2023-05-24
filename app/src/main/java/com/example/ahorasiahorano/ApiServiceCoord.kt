@@ -6,6 +6,6 @@ import retrofit2.http.Url
 
 interface ApiServiceCoord {
     @GET
-   suspend fun getRefCatastral(@Url url: String): Response<CoordToRc>
+    suspend fun getRefCatastral(@Url url: String): Response<CoordToRc>
 
 }

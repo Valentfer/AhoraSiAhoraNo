@@ -21,8 +21,8 @@
         android:id="@+id/tvRefDato"
         android:layout_width="233dp"
         android:layout_height="39dp"
-        android:layout_marginTop="56dp"
-        android:text="TextView"
+        android:layout_marginTop="28dp"
+        android:text="@string/tvRefDato"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imvDato" />
@@ -31,8 +31,8 @@
         android:id="@+id/tvcodPosDato"
         android:layout_width="233dp"
         android:layout_height="39dp"
-        android:layout_marginTop="56dp"
-        android:text="TextView"
+        android:layout_marginTop="28dp"
+        android:text="@string/tvCodPDAto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvMunicipioDato" />
@@ -41,18 +41,29 @@
         android:id="@+id/tvMunicipioDato"
         android:layout_width="233dp"
         android:layout_height="39dp"
-        android:layout_marginTop="56dp"
-        android:text="TextView"
+        android:layout_marginTop="28dp"
+        android:text="@string/tvMunDato"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvRefDato" />
+
     <TextView
         android:id="@+id/tvDirDato"
         android:layout_width="233dp"
         android:layout_height="39dp"
-        android:layout_marginTop="56dp"
-        android:text="TextView"
+        android:layout_marginTop="28dp"
+        android:text="@string/tvDirDato"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvcodPosDato" />
+
+    <TextView
+        android:id="@+id/tvExtDato"
+        android:layout_width="233dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/tvExtDato"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDirDato" />
 </androidx.constraintlayout.widget.ConstraintLayout>

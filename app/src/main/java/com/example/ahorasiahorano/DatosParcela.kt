@@ -9,4 +9,4 @@ data class DatosParcela(
     val dir: String,
     val extension: String,
     val codPostal: String
-):Serializable
+) : Serializable

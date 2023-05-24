@@ -29,16 +29,16 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         }
         btnInicio.setOnClickListener {
-            if (etUsuario.text.isNotEmpty() && etPassword.text.isNotEmpty()){
-                if (iniciarApp(etUsuario.text.toString(), etPassword.text.toString())){
+            if (etUsuario.text.isNotEmpty() && etPassword.text.isNotEmpty()) {
+                if (iniciarApp(etUsuario.text.toString(), etPassword.text.toString())) {
                     val intent = Intent(this, Menu::class.java)
                     intent.putExtra("usuario", etUsuario.text.toString())
                     startActivity(intent)
-                }else{
-                    Toast.makeText(this,"Datos incorrectos",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Datos incorrectos", Toast.LENGTH_LONG).show()
                 }
-            }else{
-                Toast.makeText(this,"Introduce el usuario y contraseña",Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Introduce el usuario y contraseña", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -46,11 +46,14 @@ class Login : AppCompatActivity() {
     private fun iniciarApp(usuario: String, password: String): Boolean {
 
         val admin = BBDD(this, "login", null, 1)
-            val db = admin.readableDatabase
-            val cursor = db.rawQuery("select * from login where usuario ='$usuario' and password = '$password'", null)
-            val count = cursor.count
-            cursor.close()
-            db.close()
-            return count > 0
+        val db = admin.readableDatabase
+        val cursor = db.rawQuery(
+            "select * from login where usuario ='$usuario' and password = '$password'",
+            null
+        )
+        val count = cursor.count
+        cursor.close()
+        db.close()
+        return count > 0
     }
 }

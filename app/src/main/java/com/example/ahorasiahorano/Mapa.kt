@@ -144,12 +144,12 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                     val obtenerRefCat = ObtenerRefCat(longitud, latitud)
                     obtenerRefCat.getRefCatastral { ref, _, _, _, _ ->
                         runOnUiThread {
-                            refCatas = if (eligeRef){
+                            refCatas = if (eligeRef) {
                                 ref
-                            }else{
+                            } else {
                                 intent.extras!!.getString("referencia").toString()
                             }
-                                getPuntos(refCatas)
+                            getPuntos(refCatas)
                         }
                     }
                     Log.i("refcatas", refCatas)
@@ -164,7 +164,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                     longActual = location.longitude
                     Log.i("respuesta2", "$latActual,$longActual")
                     val obtenerRefCat = ObtenerRefCat(longActual, latActual)
-                    obtenerRefCat.getRefCatastral { ref,_,_,_,_ ->
+                    obtenerRefCat.getRefCatastral { ref, _, _, _, _ ->
                         runOnUiThread {
                             refCatasActua = ref
                         }
@@ -399,29 +399,29 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-private fun guardarDatos(latitud: Double, longitud: Double) {
-    val snapshotReadyCallback = GoogleMap.SnapshotReadyCallback { bitmap ->
-        val stream = ByteArrayOutputStream()
-        bitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
-        val bytes = stream.toByteArray()
-        val imagestring = Base64.encodeToString(bytes, Base64.DEFAULT)
+    private fun guardarDatos(latitud: Double, longitud: Double) {
+        val snapshotReadyCallback = GoogleMap.SnapshotReadyCallback { bitmap ->
+            val stream = ByteArrayOutputStream()
+            bitmap!!.compress(Bitmap.CompressFormat.PNG, 90, stream)
+            val bytes = stream.toByteArray()
+            val imagestring = Base64.encodeToString(bytes, Base64.DEFAULT)
 
-        val admin = BBDD(this, "parcelas", null, 1)
-        val baseDatos = admin.writableDatabase
-        val registro = ContentValues()
+            val admin = BBDD(this, "parcelas", null, 1)
+            val baseDatos = admin.writableDatabase
+            val registro = ContentValues()
 
-        registro.put("usuario", intent.extras!!.getString("usuario"))
-        registro.put("imagen", imagestring)
-        registro.put("latitud", latitud)
-        registro.put("longitud", longitud)
+            registro.put("usuario", intent.extras!!.getString("usuario"))
+            registro.put("imagen", imagestring)
+            registro.put("latitud", latitud)
+            registro.put("longitud", longitud)
 
-        baseDatos.insert("parcelas", null, registro)
+            baseDatos.insert("parcelas", null, registro)
 
-        baseDatos.close()
+            baseDatos.close()
+        }
+
+        map.snapshot(snapshotReadyCallback)
     }
-
-    map.snapshot(snapshotReadyCallback)
-}
 
 }
 

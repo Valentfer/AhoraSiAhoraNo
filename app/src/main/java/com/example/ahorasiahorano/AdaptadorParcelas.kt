@@ -10,16 +10,20 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
-class AdaptadorParcelas(private val listaParcelas: List<DatosParcela>, private val listener: OnItemClickListener): RecyclerView.Adapter<AdaptadorParcelas.ViewHolder>(){
+class AdaptadorParcelas(
+    private val listaParcelas: List<DatosParcela>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<AdaptadorParcelas.ViewHolder>() {
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onItemClick(datosParcela: DatosParcela)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card,parent, false)
-    return ViewHolder(view)
-   // val layoutInflater = LayoutInflater.from(parent.context)
-     //   return ViewHolder(layoutInflater.inflate(R.layout.item_card, parent, false))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card, parent, false)
+        return ViewHolder(view)
+        // val layoutInflater = LayoutInflater.from(parent.context)
+        //   return ViewHolder(layoutInflater.inflate(R.layout.item_card, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -30,13 +34,14 @@ class AdaptadorParcelas(private val listaParcelas: List<DatosParcela>, private v
         holder.render(listaParcelas[position])
 
     }
-    inner class ViewHolder(private val view: View):RecyclerView.ViewHolder(view){
 
-        fun render(datosParcela: DatosParcela){
+    inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-            view.findViewById<TextView>(R.id.tvCardCP).text = datosParcela.codPostal
+        fun render(datosParcela: DatosParcela) {
+
+            view.findViewById<TextView>(R.id.tvCardDir).text = datosParcela.dir
             view.findViewById<TextView>(R.id.tvCardRef).text = datosParcela.refeCat
-            view.findViewById<TextView>(R.id.tvCardCcaa).text = datosParcela.extension
+            view.findViewById<TextView>(R.id.tvCardMun).text = datosParcela.municipio
             view.findViewById<CardView>(R.id.Cardview).setOnClickListener {
                 listener.onItemClick(datosParcela)
             }

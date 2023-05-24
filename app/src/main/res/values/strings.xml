@@ -9,10 +9,15 @@
     <string name="Bienvenida">Bienvenido a tu Buscador de limites</string>
     <string name="usuario">Introduzca el Usuario</string>
     <string name="password">Introduzca la clave</string>
-    <string name="tvusuario">Introduzca el Usuario:</string>
-    <string name="tvpassword">Introduzca la clave:</string>
+    <string name="tvusuario">Introduzca el Usuario: </string>
+    <string name="tvpassword">Introduzca la clave: </string>
     <string name="btnRegistro">Registrarse en AhoraSi,AhoraNo</string>
     <string name="btnInicio">Inicio</string>
+    <string name="tvRefDato">Referecia Catastral: </string>
+    <string name="tvDirDato">Dirección: </string>
+    <string name="tvMunDato">Municipio: </string>
+    <string name="tvCodPDAto">C.P.: </string>
+    <string name="tvExtDato">Extensión: </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="btnRegInsertar">Insertar</string>
 </resources>
