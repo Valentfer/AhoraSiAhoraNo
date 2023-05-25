@@ -29,15 +29,29 @@ class DatoAcParcela : AppCompatActivity() {
     }
 
     private fun mostrarDatos() {
+//val objeto = intent.extras?.getString("referencia") as DatosParcela
+val objeto = intent.extras?.getSerializable("referencia") as DatosParcela
 
-        tvRef.text = intent.extras?.getString("referencia")
-        tvDir.text = intent.extras?.getString("direccion")
-        tvMunicipio.text = intent.extras?.getString("municipio")
-        tvCodP.text = intent.extras?.getString("codpostal")
-        tvExt.text = intent.extras?.getString("extension")
+        //tvRef.text = intent.extras?.getString("referencia")
+        //tvRef.text = intent.extras?.getSerializable("referencia").toString()
+        tvRef.text = objeto.refeCat
+        //tvDir.text = intent.extras?.getString("direccion")
+        //tvDir.text = intent.extras?.getSerializable("direccion").toString()
+        tvDir.text = objeto.dir
+        //tvMunicipio.text = intent.extras?.getString("municipio")
+        //tvMunicipio.text = intent.extras?.getSerializable("municipio").toString()
+        tvMunicipio.text = objeto.municipio
+        //tvCodP.text = intent.extras?.getString("codpostal")
+        //tvCodP.text = intent.extras?.getSerializable("codpostal").toString()
+        tvCodP.text = objeto.codPostal
+        //tvExt.text = intent.extras?.getString("extension")
+        //tvExt.text = intent.extras?.getSerializable("extension").toString()
+        tvExt.text = objeto.extension
         // ivImageView.setImageBitmap(intent.extras.getString("imagen"))
 
-        val bitmap = intent.extras?.getString("imagen")
+        //val bitmap = intent.extras?.getString("imagen")
+        //val bitmap = intent.extras?.getSerializable("imagen").toString()
+        val bitmap = objeto.parcela.imagen
         val bitbytearra = Base64.decode(bitmap, Base64.DEFAULT)
         val imagenbit = BitmapFactory.decodeByteArray(bitbytearra, 0, bitbytearra.size)
         ivImageView.findViewById<ImageView>(R.id.imvDato).setImageBitmap(imagenbit)

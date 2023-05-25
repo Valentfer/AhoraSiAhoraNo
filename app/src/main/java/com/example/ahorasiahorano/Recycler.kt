@@ -84,12 +84,13 @@ class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
 
     override fun onItemClick(datosParcela: DatosParcela) {
         val intent = Intent(this, DatoAcParcela::class.java)
-        intent.putExtra("referencia", datosParcela.refeCat)
-        intent.putExtra("direccion", datosParcela.dir)
-        intent.putExtra("municipio", datosParcela.municipio)
-        intent.putExtra("codpostal", datosParcela.codPostal)
-        intent.putExtra("extension", datosParcela.extension)
-        intent.putExtra("imagen", datosParcela.parcela.imagen)
+        intent.putExtra("referencia", datosParcela)
+//        intent.putExtra("referencia", datosParcela.refeCat)
+//        intent.putExtra("direccion", datosParcela.dir)
+//        intent.putExtra("municipio", datosParcela.municipio)
+//        intent.putExtra("codpostal", datosParcela.codPostal)
+//        intent.putExtra("extension", datosParcela.extension)
+//        intent.putExtra("imagen", datosParcela.parcela.imagen)
         startActivity(intent)
     }
 }
