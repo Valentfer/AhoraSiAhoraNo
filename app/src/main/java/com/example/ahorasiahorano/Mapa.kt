@@ -271,6 +271,8 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                             4000,
                             null
                         )
+                        latitud = latt
+                        longitud = longg
                     }
                 }
             } catch (e: java.lang.Exception) {
