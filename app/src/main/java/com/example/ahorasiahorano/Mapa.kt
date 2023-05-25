@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -234,6 +235,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                 val pares = coordenadas.chunked(2) {
                     Pair(it[0], it[1])
                 }
+
                 val polygonOptions = PolygonOptions()
                 runOnUiThread {
                     map.clear()
@@ -257,6 +259,19 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                 polygonOptions.clickable(true)
                 runOnUiThread {
                     map.addPolygon(polygonOptions)
+
+                    if (!eligeRef) {
+                        val primerPar = polygonOptions.points[0]
+                        val latt = primerPar.latitude
+                        val longg = primerPar.longitude
+                        val coordenada = LatLng(latt, longg)
+                        val marker = map.addMarker(MarkerOptions().position(coordenada))
+                        map.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(coordenada, 18f),
+                            4000,
+                            null
+                        )
+                    }
                 }
             } catch (e: java.lang.Exception) {
                 Log.i("polipuntos", e.message.toString())

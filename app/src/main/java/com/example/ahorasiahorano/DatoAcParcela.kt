@@ -30,14 +30,14 @@ class DatoAcParcela : AppCompatActivity() {
 
     private fun mostrarDatos() {
 
-        tvRef.text = intent.extras!!.getString("referencia")
-        tvDir.text = intent.extras!!.getString("direccion")
-        tvMunicipio.text = intent.extras!!.getString("municipio")
-        tvCodP.text = intent.extras!!.getString("codpostal")
-        tvExt.text = intent.extras!!.getString("extension")
+        tvRef.text = intent.extras?.getString("referencia")
+        tvDir.text = intent.extras?.getString("direccion")
+        tvMunicipio.text = intent.extras?.getString("municipio")
+        tvCodP.text = intent.extras?.getString("codpostal")
+        tvExt.text = intent.extras?.getString("extension")
         // ivImageView.setImageBitmap(intent.extras.getString("imagen"))
 
-        val bitmap = intent.extras!!.getString("imagen")
+        val bitmap = intent.extras?.getString("imagen")
         val bitbytearra = Base64.decode(bitmap, Base64.DEFAULT)
         val imagenbit = BitmapFactory.decodeByteArray(bitbytearra, 0, bitbytearra.size)
         ivImageView.findViewById<ImageView>(R.id.imvDato).setImageBitmap(imagenbit)
