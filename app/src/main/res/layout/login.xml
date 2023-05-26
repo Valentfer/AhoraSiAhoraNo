@@ -7,37 +7,45 @@
     tools:context=".Login">
 
     <ImageView
-        android:id="@+id/image_logo"
-        android:layout_width="204dp"
-        android:layout_height="159dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/if_advantage_nearby_1034361_88844"
+        android:alpha="0.4"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/if_advantage_nearby_1034361_88844" />
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/select_your_location"/>
 
     <TextView
         android:id="@+id/tvUsuario"
-        android:layout_width="372dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:gravity="center"
         android:text="@string/tvusuario"
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/lottie" />
 
     <EditText
         android:id="@+id/etUsuario"
         style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="372dp"
-        android:layout_height="52dp"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="@string/usuario"
         android:inputType="text"
+        android:background="@color/white"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,26 +54,26 @@
 
     <TextView
         android:id="@+id/tvPassword"
-        android:layout_width="372dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:gravity="center"
+        android:textColor="@color/black"
         android:text="@string/tvpassword"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUsuario" />
 
     <EditText
         android:id="@+id/etPassword"
         style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="372dp"
-        android:layout_height="52dp"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="@string/password"
         android:inputType="text|textPassword"
         app:cornerRadius="20dp"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPassword"
@@ -75,27 +83,30 @@
     <Button
         android:id="@+id/btnInicio"
         style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="372dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/btnInicio"
         app:cornerRadius="20dp"
+        android:backgroundTint="#DDBE88E6"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnRegistro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"
         app:layout_constraintVertical_bias="0.133"
-        app:strokeColor="#DD7923B8" />
+        app:strokeColor="#DD8C47BF" />
 
     <Button
         android:id="@+id/btnRegistro"
         style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="372dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
         android:text="@string/btnRegistro"
         android:textSize="11sp"
         app:cornerRadius="20dp"
+        android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.589"
