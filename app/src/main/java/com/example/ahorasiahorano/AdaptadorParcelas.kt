@@ -22,8 +22,6 @@ class AdaptadorParcelas(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card, parent, false)
         return ViewHolder(view)
-        // val layoutInflater = LayoutInflater.from(parent.context)
-        //   return ViewHolder(layoutInflater.inflate(R.layout.item_card, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +30,6 @@ class AdaptadorParcelas(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.render(listaParcelas[position])
-
     }
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {

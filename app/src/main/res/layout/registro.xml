@@ -6,30 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".Registro">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/if_advantage_nearby_1034361_88844"
+        android:alpha="0.4"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieReg"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/floating_magic_link_login"/>
+
     <EditText
         android:id="@+id/etRegUsuario"
         style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="236dp"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:hint="@string/usuario"
         android:inputType="text"
+        android:textColor="@color/black"
         android:radius="20dp"
         android:textColorHint="#DD7923B8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/lottieReg"/>
 
     <EditText
         android:id="@+id/etRegPassword"
         style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="0dp"
-        android:layout_height="52dp"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="@string/password"
         android:inputType="text"
+        android:background="@color/white"
         android:radius="20dp"
         android:textColorHint="#DD7923B8"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,11 +56,13 @@
     <Button
         android:id="@+id/btnRegInsertar"
         style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="372dp"
-        android:layout_height="52dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:text="@string/btnRegInsertar"
         app:cornerRadius="20dp"
+        android:textStyle="bold"
+        android:backgroundTint="#DDBE88E6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintStart_toStartOf="parent"

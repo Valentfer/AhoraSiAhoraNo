@@ -7,9 +7,15 @@
     tools:context=".DatoAcParcela">
 
     <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/if_advantage_nearby_1034361_88844"
+        android:alpha="0.4"/>
+
+    <ImageView
         android:id="@+id/imvDato"
-        android:layout_width="300dp"
-        android:layout_height="192dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_marginTop="68dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -19,8 +25,10 @@
 
     <TextView
         android:id="@+id/tvRefDato"
-        android:layout_width="233dp"
-        android:layout_height="39dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:text="@string/tvRefDato"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,8 +37,10 @@
 
     <TextView
         android:id="@+id/tvcodPosDato"
-        android:layout_width="233dp"
-        android:layout_height="39dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:text="@string/tvCodPDAto"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,8 +49,10 @@
 
     <TextView
         android:id="@+id/tvMunicipioDato"
-        android:layout_width="233dp"
-        android:layout_height="39dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:text="@string/tvMunDato"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,8 +61,10 @@
 
     <TextView
         android:id="@+id/tvDirDato"
-        android:layout_width="233dp"
-        android:layout_height="39dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:text="@string/tvDirDato"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,8 +73,10 @@
 
     <TextView
         android:id="@+id/tvExtDato"
-        android:layout_width="233dp"
-        android:layout_height="39dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:text="@string/tvExtDato"
         app:layout_constraintEnd_toEndOf="parent"

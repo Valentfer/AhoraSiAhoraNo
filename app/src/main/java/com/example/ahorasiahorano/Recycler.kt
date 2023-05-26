@@ -74,7 +74,7 @@ class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
                             pBar.visibility = View.GONE
                         }
                         parcelas.add(DatosParcela(parcela, ref, dir, codPostal, extension, muni))
-                        adapter.notifyItemInserted(parcelas.size)
+                        adapter.notifyItemInserted(parcelas.size - 1)
                     }
                 }
             } catch (e: Exception) {
@@ -85,7 +85,6 @@ class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
 
     override fun onItemClick(datosParcela: DatosParcela) {
         val intent = Intent(this, DatoAcParcela::class.java)
-        //intent.putExtra("referencia", datosParcela)
         intent.putExtra("referencia", Gson().toJson(datosParcela))
         startActivity(intent)
     }

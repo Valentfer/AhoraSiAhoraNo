@@ -265,7 +265,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                         val latt = primerPar.latitude
                         val longg = primerPar.longitude
                         val coordenada = LatLng(latt, longg)
-                        val marker = map.addMarker(MarkerOptions().position(coordenada))
+                        map.addMarker(MarkerOptions().position(coordenada))
                         map.animateCamera(
                             CameraUpdateFactory.newLatLngZoom(coordenada, 18f),
                             4000,
@@ -433,7 +433,6 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
             registro.put("longitud", longitud)
 
             baseDatos.insert("parcelas", null, registro)
-
             baseDatos.close()
         }
 

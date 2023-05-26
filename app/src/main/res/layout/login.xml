@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_loop="true"
         app:lottie_autoPlay="true"
-        app:lottie_rawRes="@raw/select_your_location"/>
+        app:lottie_rawRes="@raw/map_pin_location"/>
 
     <TextView
         android:id="@+id/tvUsuario"
@@ -83,7 +83,7 @@
     <Button
         android:id="@+id/btnInicio"
         style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnInicio"
         app:cornerRadius="20dp"
@@ -91,10 +91,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnRegistro"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"
-        app:layout_constraintVertical_bias="0.133"
         app:strokeColor="#DD8C47BF" />
 
     <Button
@@ -109,7 +107,6 @@
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
