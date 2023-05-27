@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/if_advantage_nearby_1034361_88844"
     tools:context=".Recycler">
 
     <androidx.recyclerview.widget.RecyclerView

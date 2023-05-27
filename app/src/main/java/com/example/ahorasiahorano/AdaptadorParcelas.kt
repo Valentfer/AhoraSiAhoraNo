@@ -36,9 +36,8 @@ class AdaptadorParcelas(
 
         fun render(datosParcela: DatosParcela) {
 
-            view.findViewById<TextView>(R.id.tvCardDir).text = datosParcela.dir
             view.findViewById<TextView>(R.id.tvCardRef).text = datosParcela.refeCat
-            view.findViewById<TextView>(R.id.tvCardMun).text = datosParcela.municipio
+            view.findViewById<TextView>(R.id.tvCardMun).text = datosParcela.longitud
             view.findViewById<CardView>(R.id.Cardview).setOnClickListener {
                 listener.onItemClick(datosParcela)
             }

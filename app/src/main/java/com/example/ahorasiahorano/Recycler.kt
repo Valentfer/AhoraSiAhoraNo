@@ -68,12 +68,12 @@ class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val obtenerRefCat = ObtenerRefCat(parcela.Longitud, parcela.latitud)
-                obtenerRefCat.getRefCatastral { ref, dir, codPostal, extension, muni ->
+                obtenerRefCat.getRefCatastral { ref, dir, lati, longi ->
                     runOnUiThread {
                         if (pBar.isVisible) {
                             pBar.visibility = View.GONE
                         }
-                        parcelas.add(DatosParcela(parcela, ref, dir, codPostal, extension, muni))
+                        parcelas.add(DatosParcela(parcela, ref, dir, lati, longi))
                         adapter.notifyItemInserted(parcelas.size - 1)
                     }
                 }

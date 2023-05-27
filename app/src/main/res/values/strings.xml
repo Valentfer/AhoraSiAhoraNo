@@ -15,9 +15,8 @@
     <string name="btnInicio">Inicio</string>
     <string name="tvRefDato">Referecia Catastral: </string>
     <string name="tvDirDato">Dirección: </string>
-    <string name="tvMunDato">Municipio: </string>
-    <string name="tvCodPDAto">C.P.: </string>
-    <string name="tvExtDato">Extensión: </string>
+    <string name="tvLongDato">Longitud: </string>
+    <string name="tvLatDato">Latitud: </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="btnRegInsertar">Insertar</string>
 </resources>

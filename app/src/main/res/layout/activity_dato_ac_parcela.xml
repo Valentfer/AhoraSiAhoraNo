@@ -14,9 +14,10 @@
 
     <ImageView
         android:id="@+id/imvDato"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="400dp"
+        android:layout_height="300dp"
         android:layout_marginTop="68dp"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,28 +37,28 @@
         app:layout_constraintTop_toBottomOf="@+id/imvDato" />
 
     <TextView
-        android:id="@+id/tvcodPosDato"
+        android:id="@+id/tvLatDato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_marginTop="28dp"
-        android:text="@string/tvCodPDAto"
+        android:text="@string/tvLatDato"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMunicipioDato" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDirDato" />
 
     <TextView
-        android:id="@+id/tvMunicipioDato"
+        android:id="@+id/tvLongDato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_marginTop="28dp"
-        android:text="@string/tvMunDato"
+        android:text="@string/tvLongDato"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRefDato" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLatDato" />
 
     <TextView
         android:id="@+id/tvDirDato"
@@ -69,17 +70,6 @@
         android:text="@string/tvDirDato"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvcodPosDato" />
+        app:layout_constraintTop_toBottomOf="@+id/tvRefDato" />
 
-    <TextView
-        android:id="@+id/tvExtDato"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginTop="28dp"
-        android:text="@string/tvExtDato"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDirDato" />
 </androidx.constraintlayout.widget.ConstraintLayout>

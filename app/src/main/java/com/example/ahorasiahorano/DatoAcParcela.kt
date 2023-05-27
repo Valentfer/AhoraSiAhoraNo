@@ -12,8 +12,8 @@ class DatoAcParcela : AppCompatActivity() {
 
     private lateinit var tvRef: TextView
     private lateinit var tvDir: TextView
-    private lateinit var tvMunicipio: TextView
-    private lateinit var tvCodP: TextView
+    private lateinit var tvLongDato: TextView
+    private lateinit var tvLatDato: TextView
     private lateinit var tvExt: TextView
     private lateinit var ivImageView: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +22,8 @@ class DatoAcParcela : AppCompatActivity() {
 
         tvRef = findViewById(R.id.tvRefDato)
         tvDir = findViewById(R.id.tvDirDato)
-        tvMunicipio = findViewById(R.id.tvMunicipioDato)
-        tvCodP = findViewById(R.id.tvcodPosDato)
-        tvExt = findViewById(R.id.tvExtDato)
+        tvLongDato = findViewById(R.id.tvLongDato)
+        tvLatDato = findViewById(R.id.tvLatDato)
         ivImageView = findViewById(R.id.imvDato)
         mostrarDatos()
     }
@@ -35,9 +34,8 @@ class DatoAcParcela : AppCompatActivity() {
 
         tvRef.text = objeto.refeCat
         tvDir.text = objeto.dir
-        tvMunicipio.text = objeto.municipio
-        tvCodP.text = objeto.codPostal
-        tvExt.text = objeto.extension
+        tvLongDato.text = objeto.longitud
+        tvLatDato.text = objeto.latitud
         val bitmap = objeto.parcela.imagen
         val bitbytearra = Base64.decode(bitmap, Base64.DEFAULT)
         val imagenbit = BitmapFactory.decodeByteArray(bitbytearra, 0, bitbytearra.size)
