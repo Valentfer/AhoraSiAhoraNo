@@ -9,8 +9,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/if_advantage_nearby_1034361_88844"
-        android:alpha="0.4"/>
+        android:alpha="0.4"
+        android:background="@drawable/if_advantage_nearby_1034361_88844" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieReg"
@@ -20,9 +20,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:lottie_loop="true"
         app:lottie_autoPlay="true"
-        app:lottie_rawRes="@raw/floating_magic_link_login"/>
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/floating_magic_link_login" />
 
     <EditText
         android:id="@+id/etRegUsuario"
@@ -32,12 +32,12 @@
         android:layout_marginTop="90dp"
         android:hint="@string/usuario"
         android:inputType="text"
-        android:textColor="#DD7923B8"
         android:radius="20dp"
+        android:textColor="#DD7923B8"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lottieReg"/>
+        app:layout_constraintTop_toBottomOf="@+id/lottieReg" />
 
     <EditText
         android:id="@+id/etRegPassword"
@@ -58,13 +58,13 @@
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="@string/btnRegInsertar"
-        app:cornerRadius="20dp"
-        android:textStyle="bold"
-        android:backgroundTint="#DDBE88E6"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
         android:layout_marginRight="20dp"
+        android:backgroundTint="#DDBE88E6"
+        android:text="@string/btnRegInsertar"
+        android:textStyle="bold"
+        app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintStart_toStartOf="parent"

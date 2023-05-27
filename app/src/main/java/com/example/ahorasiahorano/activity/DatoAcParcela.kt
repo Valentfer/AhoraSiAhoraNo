@@ -33,10 +33,10 @@ class DatoAcParcela : AppCompatActivity() {
         val jsonString = intent.extras?.getString("referencia", "").toString()
         val objeto = Gson().fromJson(jsonString, DatosParcela::class.java)
 
-        tvRef.text = tvRef.text.toString() + "\n" +objeto.refeCat
-        tvDir.text = tvDir.text.toString() + "\n" +objeto.dir
-        tvLongDato.text = tvLongDato.text.toString() + "\n" +objeto.longitud
-        tvLatDato.text = tvLatDato.text.toString() + "\n" +objeto.latitud
+        tvRef.text = tvRef.text.toString() + "\n" + objeto.refeCat
+        tvDir.text = tvDir.text.toString() + "\n" + objeto.dir
+        tvLongDato.text = tvLongDato.text.toString() + "\n" + objeto.longitud
+        tvLatDato.text = tvLatDato.text.toString() + "\n" + objeto.latitud
         val bitmap = objeto.parcela.imagen
         val bitbytearra = Base64.decode(bitmap, Base64.DEFAULT)
         val imagenbit = BitmapFactory.decodeByteArray(bitbytearra, 0, bitbytearra.size)

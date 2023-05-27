@@ -9,8 +9,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/if_advantage_nearby_1034361_88844"
-        android:alpha="0.4"/>
+        android:alpha="0.4"
+        android:background="@drawable/if_advantage_nearby_1034361_88844" />
 
     <ImageView
         android:id="@+id/imvDato"
@@ -28,10 +28,10 @@
         android:id="@+id/tvRefDato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:text="@string/tvRefDato"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imvDato" />
@@ -40,10 +40,10 @@
         android:id="@+id/tvLatDato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:text="@string/tvLatDato"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDirDato" />
@@ -52,10 +52,10 @@
         android:id="@+id/tvLongDato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:text="@string/tvLongDato"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLatDato" />
@@ -64,10 +64,10 @@
         android:id="@+id/tvDirDato"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textStyle="bold"
         android:layout_marginTop="28dp"
         android:text="@string/tvDirDato"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvRefDato" />

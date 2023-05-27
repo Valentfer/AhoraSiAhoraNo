@@ -23,9 +23,6 @@
             android:name=".activity.Recycler"
             android:exported="false" />
         <activity
-            android:name=".ItemCard"
-            android:exported="false" />
-        <activity
             android:name=".activity.Registro"
             android:exported="false" />
         <activity
