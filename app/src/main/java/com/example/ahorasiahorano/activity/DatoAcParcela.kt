@@ -1,4 +1,4 @@
-package com.example.ahorasiahorano
+package com.example.ahorasiahorano.activity
 
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Base64
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.ahorasiahorano.clases.DatosParcela
+import com.example.ahorasiahorano.R
 import com.google.gson.Gson
 
 class DatoAcParcela : AppCompatActivity() {
@@ -14,7 +16,6 @@ class DatoAcParcela : AppCompatActivity() {
     private lateinit var tvDir: TextView
     private lateinit var tvLongDato: TextView
     private lateinit var tvLatDato: TextView
-    private lateinit var tvExt: TextView
     private lateinit var ivImageView: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +33,10 @@ class DatoAcParcela : AppCompatActivity() {
         val jsonString = intent.extras?.getString("referencia", "").toString()
         val objeto = Gson().fromJson(jsonString, DatosParcela::class.java)
 
-        tvRef.text = objeto.refeCat
-        tvDir.text = objeto.dir
-        tvLongDato.text = objeto.longitud
-        tvLatDato.text = objeto.latitud
+        tvRef.text = tvRef.text.toString() + "\n" +objeto.refeCat
+        tvDir.text = tvDir.text.toString() + "\n" +objeto.dir
+        tvLongDato.text = tvLongDato.text.toString() + "\n" +objeto.longitud
+        tvLatDato.text = tvLatDato.text.toString() + "\n" +objeto.latitud
         val bitmap = objeto.parcela.imagen
         val bitbytearra = Base64.decode(bitmap, Base64.DEFAULT)
         val imagenbit = BitmapFactory.decodeByteArray(bitbytearra, 0, bitbytearra.size)

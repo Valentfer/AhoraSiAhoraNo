@@ -1,4 +1,4 @@
-package com.example.ahorasiahorano
+package com.example.ahorasiahorano.clases
 
 data class Parcela(
     val usuario: String,

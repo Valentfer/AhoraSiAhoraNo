@@ -1,4 +1,4 @@
-package com.example.ahorasiahorano
+package com.example.ahorasiahorano.activity
 
 import android.Manifest
 import android.animation.ValueAnimator
@@ -17,6 +17,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.example.ahorasiahorano.baseDatos.BBDD
+import com.example.ahorasiahorano.clases.ObtenerRefCat
+import com.example.ahorasiahorano.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest

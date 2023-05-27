@@ -1,4 +1,4 @@
-package com.example.ahorasiahorano
+package com.example.ahorasiahorano.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.ahorasiahorano.baseDatos.BBDD
+import com.example.ahorasiahorano.R
 
 class Login : AppCompatActivity() {
 

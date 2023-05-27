@@ -1,6 +1,7 @@
-package com.example.ahorasiahorano
+package com.example.ahorasiahorano.clases
 
 import android.util.Log
+import com.example.ahorasiahorano.api.ApiServiceCoord
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

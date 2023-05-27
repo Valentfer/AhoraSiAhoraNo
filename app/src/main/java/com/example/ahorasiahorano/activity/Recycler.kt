@@ -1,4 +1,4 @@
-package com.example.ahorasiahorano
+package com.example.ahorasiahorano.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +10,12 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ahorasiahorano.recycler.AdaptadorParcelas
+import com.example.ahorasiahorano.baseDatos.BBDD
+import com.example.ahorasiahorano.clases.DatosParcela
+import com.example.ahorasiahorano.clases.ObtenerRefCat
+import com.example.ahorasiahorano.clases.Parcela
+import com.example.ahorasiahorano.R
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

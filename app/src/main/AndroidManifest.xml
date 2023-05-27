@@ -17,19 +17,19 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".DatoAcParcela"
+            android:name=".activity.DatoAcParcela"
             android:exported="false" />
         <activity
-            android:name=".Recycler"
+            android:name=".activity.Recycler"
             android:exported="false" />
         <activity
             android:name=".ItemCard"
             android:exported="false" />
         <activity
-            android:name=".Registro"
+            android:name=".activity.Registro"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".activity.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Menu"
+            android:name=".activity.Menu"
             android:exported="true" />
 
         <meta-data
@@ -46,7 +46,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Mapa"
+            android:name=".activity.Mapa"
             android:exported="true" />
     </application>
 

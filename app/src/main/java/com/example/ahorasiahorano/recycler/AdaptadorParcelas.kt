@@ -1,4 +1,4 @@
-package com.example.ahorasiahorano
+package com.example.ahorasiahorano.recycler
 
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -9,6 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ahorasiahorano.R
+import com.example.ahorasiahorano.clases.DatosParcela
 
 class AdaptadorParcelas(
     private val listaParcelas: List<DatosParcela>,
@@ -37,7 +39,7 @@ class AdaptadorParcelas(
         fun render(datosParcela: DatosParcela) {
 
             view.findViewById<TextView>(R.id.tvCardRef).text = datosParcela.refeCat
-            view.findViewById<TextView>(R.id.tvCardMun).text = datosParcela.longitud
+            view.findViewById<TextView>(R.id.tvCardDir).text = datosParcela.dir
             view.findViewById<CardView>(R.id.Cardview).setOnClickListener {
                 listener.onItemClick(datosParcela)
             }
