@@ -43,6 +43,12 @@ import org.osgeo.proj4j.proj.TransverseMercatorProjection
 import java.io.ByteArrayOutputStream
 import java.util.Locale
 
+/*
+* En esta clase se realiza la funcionalidad principal de la plicación, se hace uso de la localización fina,
+* por lo que hay que solicitar los permisos correspodientes, además de varias llamadas a las API correspondientes
+* para obtener los datos con los que realizamos la comparación para distinguir si estamos en una parcela u otra, se crea el mapa donde dibujaremos los límites
+* de las parcelas y la funcionalidad de pausar la alarma que nos avisa si hemos salido de los límites además de reicniciar estos límites
+* */
 class Mapa : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
@@ -81,12 +87,18 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    //Creamos el fragment con el mapa a través de los métodos que ofrece la librería de google maps
     private fun createFragment() {
         val mapFragment: SupportMapFragment =
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
+    /*
+     * Cuando el mapa esta listo llamamos  a una función para solicitar la localización
+     * y definimos que ocurre cuando hacemos click sobre el poligono creado con los límites de la parcela,
+     * al hacer click sobre el poligono se crea un mensaje que da dos opciones para guardar o no la imagen con los datos
+     **/
     override fun onMapReady(p0: GoogleMap) {
         map = p0
 
@@ -98,6 +110,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
             builder.setTitle("Parcela")
                 .setMessage("Quieres guardar la parcela?")
                 .setPositiveButton("Si") { _, _ ->
+                    //se llama a la función guardar pasandole como parámetros la longitud y latitud con los que después obtendremos datos
                     guardarDatos(latitud, longitud)
                     Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
                 }
@@ -109,16 +122,21 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    /*
+    * Al llamar a la función datosLocalizacion se establece una primera localización donde comprobaremos nuestra posición que
+    * será la que usaremos de referencia hasta que se reinicie, para saber si estamos dentro o fuera de la parcela, esta primera ubicación se compara
+    * con sucesivas llamadas a obtener la ubicación en tiempo real para comparar cada cierto intervalo, que definimos con los métodos de la clase LocationRequest
+    * */
     private fun datosLocalizacion() {
 
         localizacion = LocationServices.getFusedLocationProviderClient(this)
-
+        //se define el intervalo de tiempo con el que se irá actualizando la ubicación
         locationRequest = LocationRequest.create().apply {
             interval = 10000
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-
+// Necesitamos tener aceptados los permisos para usar estos métodos
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -137,7 +155,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
 
             return
         }
-
+        //última localización conocida
         localizacion.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
                 runOnUiThread {
@@ -145,6 +163,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                     longitud = location.longitude
                     crearPosicion()
                     Log.i("localizacion", "lat = " + latitud + "long = " + longitud)
+                    //variable para obtener un objeto que realiza una petición get a la API donde por la ubicación obtenemos el número de referencia catastral
                     val obtenerRefCat = ObtenerRefCat(longitud, latitud)
                     obtenerRefCat.getRefCatastral { ref, _, _, _ ->
                         runOnUiThread {
@@ -160,7 +179,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
-
+        //Ubicación en tiempo real
         localizacion.requestLocationUpdates(locationRequest, object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult) {
                 for (location in p0.locations) {
@@ -180,6 +199,11 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }, null)
     }
 
+    /*
+    * Llamamos a la función comprobar que nos indica si hemos salido o continuamos en la misma parcela,
+    * esta función la llamaremos al obtener los datos de la ubicación en tiempo real, dentro de esta función y a modo de aviso se implementan
+    * dos métodos para pintar el fondo de rojo y emitir un sonido
+    **/
     private fun comprobar() {
         val mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.megaman_x_error)
         val view = window.decorView
@@ -206,6 +230,14 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    /*
+    * En esta función se realiza una llamada a la API del catastro con la referencia catastral y obtenemos las coordenadas
+    * de los puntos del poligono que forma la parcela
+    * que recuperamos para poder pintar este poligon en el mapa,
+    *  esta API devuelve un XML el cual lo leemos y accedemos al elemento donde nos proporciona las coordenadas,
+    * una obtenido estas coordenadas en forma de cadena de texto llamamos a nuestra siguiente función para dibujar el poligono,
+    * cabe destacar que para no ocupar el hilo principal hay que realizar esta función en otro hilo secundario con corrutinas
+    * */
     @OptIn(DelicateCoroutinesApi::class)
     fun getPuntos(ref: String) {
         GlobalScope.launch(Dispatchers.IO) {
@@ -229,6 +261,11 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    /*
+    * Para dibujar el poligono debemos analizar la cadena de texto recibida y separar datos que no nos sirva y dividirla en una lista de coordenadas
+    * que mas tarde pasaremos a los métodos de la clase PolygonOptions que será la encargada de dibujar este poligono en el mapa, además aqui se hace uso
+    * de laa clase utmToLatLon de la librería ProjCoordinate para pasar de coordenadas UTM a coordenadas geométricas.
+    * */
     @OptIn(DelicateCoroutinesApi::class)
     private fun dibujarPoligono(puntos: String) {
         GlobalScope.launch(Dispatchers.IO) {
@@ -262,12 +299,13 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                 polygonOptions.clickable(true)
                 runOnUiThread {
                     map.addPolygon(polygonOptions)
-
+                    //Con la siguiente condición diferenciamos si la  referencia viene pasa por la ubicación o la hemos proporcionado nosotros al inicio
                     if (!eligeRef) {
                         val primerPar = polygonOptions.points[0]
                         val latt = primerPar.latitude
                         val longg = primerPar.longitude
                         val coordenada = LatLng(latt, longg)
+                        //Creamos un marcador en un punto del poligono y se realiza una animación de camara para acercar la camara al poligono
                         map.addMarker(MarkerOptions().position(coordenada))
                         map.animateCamera(
                             CameraUpdateFactory.newLatLngZoom(coordenada, 18f),
@@ -284,6 +322,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    //Función que transforma las coordenandas UTM a geográficas
     private fun utmToLatLon(
         easting: Double,
         northing: Double,
@@ -302,18 +341,19 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         return latLonCoord
     }
 
+    //Se crea una posición en la ubicación y se realiza una animación de zoom de la camara hacía la posición
     private fun crearPosicion() {
         val coordenada = LatLng(latitud, longitud)
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(coordenada, 18f), 4000, null)
     }
 
-    //comprobar permisos
+    //Comprobar permisos
     private fun isPermisos() = ContextCompat.checkSelfPermission(
         this,
         Manifest.permission.ACCESS_FINE_LOCATION
     ) == PackageManager.PERMISSION_GRANTED
 
-    //solicitar localización y pregunto si los permisos están aceptados
+    //Solicitar localización y pregunto si los permisos están aceptados
     private fun pedirLocalizacion() {
         if (!::map.isInitialized) return
         if (isPermisos()) {
@@ -341,7 +381,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    //solicitar permisos de localización
+    //Solicitar permisos de localización
     private fun pedirPermiso() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
@@ -358,7 +398,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    //se comprueba si el permiso está aceptado
+    //Se comprueba si el permiso está aceptado
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -419,6 +459,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    //Guardo los datos en una base de datos y transformo la imagen a un string para poder trabajar mejor con ella
     private fun guardarDatos(latitud: Double, longitud: Double) {
         val snapshotReadyCallback = GoogleMap.SnapshotReadyCallback { bitmap ->
             val stream = ByteArrayOutputStream()

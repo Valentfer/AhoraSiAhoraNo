@@ -20,7 +20,9 @@ import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+/*
+* Clase RecyclerView
+* */
 class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
 
     private val parcelas = mutableListOf<DatosParcela>()
@@ -41,7 +43,9 @@ class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
         adapter = AdaptadorParcelas(parcelas, this)
         recycler.adapter = adapter
     }
-
+    /*
+    * Busca las parcelas en la base de datos donde coincide el usuario que accede a la aplicación, si no aún no dispone de parcelas le muestra un mensaje
+    * */
     private fun buscar() {
         val admin = BBDD(this, "parcelas", null, 1)
         val baseDeDatos = admin.writableDatabase
@@ -69,7 +73,9 @@ class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
             Toast.makeText(this, "No existen parcelas", Toast.LENGTH_SHORT).show()
         }
     }
-
+/*
+* Función que busca los datos que se mostrarán en el cardview o pasará al activity correspondiente al hacer click en el cardview
+* */
     private fun obtenerDAtos(parcela: Parcela) {
         CoroutineScope(Dispatchers.IO).launch {
             try {

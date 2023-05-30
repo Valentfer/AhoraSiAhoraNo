@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.example.ahorasiahorano.clases.DatosParcela
 import com.example.ahorasiahorano.R
 import com.google.gson.Gson
+
 /*
 * En la siguiente clase se reciben los datos provientes de hacer click en los cardview para ver la información ampliada,
 * en esta clase se instancian diferentes TexView para mostrar estos datos y el ImageView correspondiente que hay que decodificar para poder mostrar la imagen

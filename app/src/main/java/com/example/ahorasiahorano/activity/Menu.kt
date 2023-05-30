@@ -8,6 +8,10 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.ahorasiahorano.R
 
+/*
+* Clase menu donde se elige entre ver las parcelas guardadas, obtener los datos de una parcela proporcionandole
+* la referencia catastral o realizarlo a partir de la nuestra ubicación
+* */
 class Menu : AppCompatActivity() {
 
     private lateinit var btnRefCat: Button
@@ -36,12 +40,14 @@ class Menu : AppCompatActivity() {
         }
     }
 
+    //Función que nos lleva a las parcelas guardadas del usuario
     private fun irAMisParcela() {
         val intent = Intent(this, Recycler::class.java)
         intent.putExtra("usuario", usuario)
         startActivity(intent)
     }
 
+    //Función para obtener los datos por referencia
     private fun parcelaRefCata() {
         porCoordenadas = false
         if (etRefCat.text.isNotEmpty()) {
@@ -57,6 +63,7 @@ class Menu : AppCompatActivity() {
 
     }
 
+    //Función para obtener los datos por ubicación
     private fun parcelaUbicacion() {
         porCoordenadas = true
         val intent = Intent(this, Mapa::class.java)
