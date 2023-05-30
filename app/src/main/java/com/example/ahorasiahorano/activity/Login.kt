@@ -10,7 +10,7 @@ import com.example.ahorasiahorano.baseDatos.BBDD
 import com.example.ahorasiahorano.R
 
 /*
-* Con esta clase se inicia la aplicación y en ella se pide un usuario y contraseña, si este está registrado y coincide con los datos guardados se da paso al menú,
+* Activity donde se inicia la aplicación y en ella se pide un usuario y contraseña, si este está registrado y coincide con los datos guardados se da paso al menú,
 * si no, y es por que no está registrado, se le da la oportunidad de registrarse o no podrá seguir usando la aplicación
 * */
 class Login : AppCompatActivity() {

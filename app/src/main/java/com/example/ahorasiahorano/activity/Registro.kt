@@ -8,7 +8,10 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.ahorasiahorano.baseDatos.BBDD
 import com.example.ahorasiahorano.R
-
+/*
+* Activity para realizar el registro de los ususarios, en ella se realiza una comprobación
+* para que los datos de usuario no esten vacios y se realiza la inserción en la base de datos
+* */
 class Registro : AppCompatActivity() {
 
     private lateinit var btnRegInsertar: Button

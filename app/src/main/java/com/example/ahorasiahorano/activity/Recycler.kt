@@ -21,7 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 /*
-* Clase RecyclerView
+* Activity RecyclerView donde se realiza la búsqueda de
 * */
 class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
 
