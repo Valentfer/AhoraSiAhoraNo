@@ -21,7 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 /*
-* Activity RecyclerView donde se realiza la búsqueda de
+* Activity RecyclerView para crear una lista de elementos
 * */
 class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
 
@@ -36,7 +36,7 @@ class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
         buscar()
         init()
     }
-
+//Declaramos el recyclerview y le pasamos el adaptador
     private fun init() {
         val recycler = findViewById<RecyclerView>(R.id.rcRecycler)
         recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -94,7 +94,7 @@ class Recycler : AppCompatActivity(), AdaptadorParcelas.OnItemClickListener {
             }
         }
     }
-
+// Paso de datos convertidos en JSON
     override fun onItemClick(datosParcela: DatosParcela) {
         val intent = Intent(this, DatoAcParcela::class.java)
         intent.putExtra("referencia", Gson().toJson(datosParcela))

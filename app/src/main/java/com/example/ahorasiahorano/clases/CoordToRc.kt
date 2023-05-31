@@ -1,5 +1,7 @@
 package com.example.ahorasiahorano.clases
-
+/*
+* Clase con las variables necesarias que para gestionar la respuesta de la API de cartociciudad por coordenadas
+* */
 data class CoordToRc(
     val address: String,
     val comunidadAutonoma: Any,

@@ -11,7 +11,9 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ahorasiahorano.R
 import com.example.ahorasiahorano.clases.DatosParcela
-
+/*
+* Adaptador del recyclerview encargado de adaptar los datos al RecyclerView y de crear y mantener las vistas asociadas a cada elemento de la lista
+* */
 class AdaptadorParcelas(
     private val listaParcelas: List<DatosParcela>,
     private val listener: OnItemClickListener
@@ -35,7 +37,7 @@ class AdaptadorParcelas(
     }
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-
+// Pintamos los cardview
         fun render(datosParcela: DatosParcela) {
 
             view.findViewById<TextView>(R.id.tvCardRef).text = datosParcela.refeCat

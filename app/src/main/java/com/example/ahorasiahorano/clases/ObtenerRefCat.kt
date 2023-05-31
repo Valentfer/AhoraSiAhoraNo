@@ -7,7 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+/*
+* Clase que realiza la llamada a la API cartociudad con las coordenadas,
+* esta clase realiza la llamada en una corrutina para liberar el hilo principal para que la aplicación no se bloquee
+* */
 class ObtenerRefCat(private var longitud: Double, private var latitud: Double) {
 
     fun getRefCatastral(callback: (String, String, String, String) -> Unit) {
@@ -32,7 +35,7 @@ class ObtenerRefCat(private var longitud: Double, private var latitud: Double) {
             }
         }
     }
-
+// Uso de la clase retrofit
     private fun getRetrofitRef(): Retrofit {
         val urlBase = "http://www.cartociudad.es/geocoder/api/geocoder/"
         return Retrofit.Builder().baseUrl(urlBase)
