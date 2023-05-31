@@ -226,6 +226,9 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
             if (!pausa) {
                 mediaPlayer.start()
                 parpadea.start()
+            }else{
+                mediaPlayer.stop()
+                parpadea.end()
             }
         }
     }
