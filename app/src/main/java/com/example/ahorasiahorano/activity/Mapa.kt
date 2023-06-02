@@ -217,16 +217,20 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
             pausa = false
             btnPausa.isVisible = false
             parpadea.end()
+            mediaPlayer.stop()
             view.setBackgroundColor(Color.WHITE)
         } else {
             btnPausa.isVisible = true
             btnReinicio.text = "Reiniciar Límites"
+            if (!eligeRef) {
+                pausa = true
+            }
             Log.e("comprobar", "Has cambiado")
 
             if (!pausa) {
                 mediaPlayer.start()
                 parpadea.start()
-            }else{
+            } else {
                 mediaPlayer.stop()
                 parpadea.end()
             }
