@@ -128,7 +128,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
     * con sucesivas llamadas a obtener la ubicación en tiempo real para comparar cada cierto intervalo, que definimos con los métodos de la clase LocationRequest
     * */
     private fun datosLocalizacion() {
-
+if (::map.isInitialized){
         localizacion = LocationServices.getFusedLocationProviderClient(this)
         //se define el intervalo de tiempo con el que se irá actualizando la ubicación
         locationRequest = LocationRequest.create().apply {
@@ -197,7 +197,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }, null)
-    }
+    }else{datosLocalizacion()}}
 
     /*
     * Llamamos a la función comprobar que nos indica si hemos salido o continuamos en la misma parcela,
