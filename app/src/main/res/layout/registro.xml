@@ -33,7 +33,7 @@
         android:hint="@string/usuario"
         android:inputType="text"
         android:radius="20dp"
-        android:textColor="#DD7923B8"
+        android:textColor="#DD320355"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
         android:hint="@string/password"
         android:inputType="text"
         android:radius="20dp"
-        android:textColor="#DD7923B8"
+        android:textColor="#DD320355"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,11 +57,11 @@
         android:id="@+id/btnRegInsertar"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="80dp"
         android:layout_marginRight="20dp"
-        android:backgroundTint="#DDBE88E6"
+        android:backgroundTint="#DDCB99F1"
         android:text="@string/btnRegInsertar"
         android:textStyle="bold"
         app:cornerRadius="20dp"
@@ -69,6 +69,6 @@
         app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etRegPassword"
-        app:strokeColor="#DD7923B8" />
+        app:strokeColor="#DD320355" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvUsuario"
-        app:strokeColor="#DD7923B8" />
+        app:strokeColor="#DD320355" />
 
     <TextView
         android:id="@+id/tvPassword"
@@ -76,16 +76,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPassword"
-        app:strokeColor="#DD7923B8" />
+        app:strokeColor="#DD320355" />
 
     <Button
         android:id="@+id/btnInicio"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:backgroundTint="#DDBE88E6"
+        android:backgroundTint="#DDCB99F1"
         android:text="@string/btnInicio"
         android:textStyle="bold"
         app:cornerRadius="20dp"
@@ -93,13 +93,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"
-        app:strokeColor="#DD8C47BF" />
+        app:strokeColor="#DD320355" />
 
     <Button
         android:id="@+id/btnRegistro"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginBottom="56dp"
         android:backgroundTint="@color/white"
         android:text="@string/btnRegistro"

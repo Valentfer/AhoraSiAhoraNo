@@ -101,7 +101,6 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
      **/
     override fun onMapReady(p0: GoogleMap) {
         map = p0
-
         pedirLocalizacion()
 
         map.setOnPolygonClickListener {
@@ -128,7 +127,6 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
     * con sucesivas llamadas a obtener la ubicación en tiempo real para comparar cada cierto intervalo, que definimos con los métodos de la clase LocationRequest
     * */
     private fun datosLocalizacion() {
-if (::map.isInitialized){
         localizacion = LocationServices.getFusedLocationProviderClient(this)
         //se define el intervalo de tiempo con el que se irá actualizando la ubicación
         locationRequest = LocationRequest.create().apply {
@@ -197,7 +195,7 @@ if (::map.isInitialized){
                 }
             }
         }, null)
-    }else{datosLocalizacion()}}
+    }
 
     /*
     * Llamamos a la función comprobar que nos indica si hemos salido o continuamos en la misma parcela,
@@ -337,7 +335,7 @@ if (::map.isInitialized){
         zoneLetter: String
     ): ProjCoordinate {
         val tm = TransverseMercatorProjection()
-        tm.setLonCDegrees(-183.0 + 6.0 * zoneNumber)
+        tm.setLonCDegrees(-183.0 + 6.0 * (zoneNumber - 1))
         tm.falseEasting = 500000.0
         tm.falseNorthing = if (zoneLetter.uppercase(Locale.ROOT) == "S") 10000000.0 else 0.0
         tm.scaleFactor = 0.9996
