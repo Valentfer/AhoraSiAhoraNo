@@ -468,7 +468,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
     private fun guardarDatos(latitud: Double, longitud: Double) {
         val snapshotReadyCallback = GoogleMap.SnapshotReadyCallback { bitmap ->
             val stream = ByteArrayOutputStream()
-            bitmap!!.compress(Bitmap.CompressFormat.JPEG, 80, stream)
+            bitmap!!.compress(Bitmap.CompressFormat.JPEG, 60, stream)
             val bytes = stream.toByteArray()
             val imagestring = Base64.encodeToString(bytes, Base64.DEFAULT)
 
